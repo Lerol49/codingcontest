@@ -3,6 +3,7 @@ from subprocess import check_output
 from werkzeug.utils import secure_filename
 import os
 import socket
+from compare_output_file import compare_output_file
 
 
 def get_ip_address():
@@ -33,9 +34,15 @@ def home():
 @app.route("/upload", methods=["POST", "GET"])
 def upload_file():
     if request.method == "POST":
-        file = request.files["file"]
-        if file:
-            file.save(os.path.join(app.config["UPLOAD_DIRECTORY"], secure_filename(file.filename)))
+        submit_file = request.files["file"]
+        if submit_file:
+            submit_filename = secure_filename(submit_file.filename)
+            submit_filepath = os.path.join(app.config["UPLOAD_DIRECTORY"], submit_filename)
+            submit_file.save(submit_filepath)
+            result = compare_output_file(submit_filepath, "templates/test_contest/cf_test_contest.txt")
+            if result:
+                return "yee"
+
     return render_template("upload.html")
 
 

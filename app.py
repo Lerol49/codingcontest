@@ -98,6 +98,7 @@ def signup():
         hashed_password = generate_password_hash(form.password.data)
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
+        print("here")
         db.session.commit()
         return "<h1> New user has been created </h1>"
 
@@ -127,7 +128,5 @@ def test_contest():
 
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-        app.run(host=ip, port=8000, debug=True)
+    app.run(host=ip, port=8000, debug=True)
 

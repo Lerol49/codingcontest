@@ -1,18 +1,7 @@
-<!DOCTYPE html>
+{% extends "base_menu.html" %}
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Test Contest</title>
-        <link rel="stylesheet" href="/static/css/style.css">
-    </head>
-    <body>
-        <div id="menu">
-            <div id="menu-items">
-                <div class="menu-item"> <b><u>Test Contest</u></b> </div>
-                <div> <a class="menu-item" href="test_contest">Test Contest</a> </div>
-            </div>
-        </div>
-    </body>
-</html>
+{% block body %}
+<div class="menu-item"> <b><u>Test Contest</u></b> </div>
+<div> <a class="menu-item" href="test_contest/pizza_distribution_problem">Pizza Distribution Problem</a> </div>
+{% endblock %}
 

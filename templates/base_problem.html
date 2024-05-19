@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/css/style.css">
+        {% block links %}{% endblock %}
+
+
+    </head>
+
+    <body>
+        <div>
+            <div id="directory"></div>
+        </div>
+        {% block body %}{% endblock %}
+        <br><br>
+        <div id="submit">
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+                <input type="submit"/>
+            </form>
+            <div id=answer_feedback>{{result}}</div>
+        </div>
+
+    </body>
+    <script src="/static/javascript/base.js"></script>
+        {% block scripts %}{% endblock %}
+    
+<html>
+

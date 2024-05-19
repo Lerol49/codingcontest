@@ -5,6 +5,8 @@ body{
     height: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     overflow: hidden;
+    color: white;
+
 }
 
 
@@ -25,5 +27,52 @@ body{
     display: block;
     text-decoration: none;
     padding: 50px;
+}
+
+#question {
+    color: white;
+    text-align: left;
+    margin-left: clamp(30px, 10vw, 500px);
+    max-width: 80vw;
+    font-size: clamp(15px, 2.5vw, 23px);
+}
+
+
+#submit {
+    margin-left: clamp(30px, 10vw, 500px);
+}
+
+#answer_feedback{
+    margin-left: 20vw;
+    margin-top: 5vh;
+    font-size: clamp(20px, 6vw, 40px);
+
+}
+
+.local_link{
+    text-decoration: none;
+    color: white;
+}
+
+#top_bar{
+    position: relative;
+    max-width: 90vw;
+    margin-left: 1vw;
+    margin-top: 2vh;
+    font-size: 20px;
+}
+
+#directory{
+    position: absolute;
+}
+
+#login_info{
+    position: absolute;
+    right: 0;
+}
+
+a{
+    color: lightblue;
+    text-decoration: none;
 }
 

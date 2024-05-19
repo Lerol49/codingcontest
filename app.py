@@ -74,7 +74,7 @@ def page_0():
 
 @app.route("/home")
 def home():
-    return render_template("/home.html")
+    return render_template("/home.html", login_info=login_info())
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -86,7 +86,7 @@ def login():
         if user:
             if check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
-                return "login successfull yeeee"
+                return redirect("home")
             return '<h1>Invalid username or password</h1>'
     return render_template('login.html', form=form)
 
@@ -98,32 +98,49 @@ def signup():
         hashed_password = generate_password_hash(form.password.data)
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
-        print("here")
         db.session.commit()
-        return "<h1> New user has been created </h1>"
 
     return render_template("signup.html", form=form)
 
-
-
-@app.route("/upload", methods=["POST", "GET"])
-def upload_file():
+def handle_task_submission(control_file) -> bool:
     if request.method == "POST":
         submit_file = request.files["file"]
         if submit_file:
             submit_filename = secure_filename(submit_file.filename)
             submit_filepath = os.path.join(app.config["UPLOAD_DIRECTORY"], submit_filename)
             submit_file.save(submit_filepath)
-            result = compare_output_file(submit_filepath, "templates/test_contest/cf_test_contest.txt")
-            if result:
-                return "yee"
+            correct = compare_output_file(submit_filepath, control_file)
+            if correct:
+                return current_user.username
+            else:
+                return "falsch!"
+    return ""
 
+
+
+@app.route("/upload", methods=["POST", "GET"])
+def test_upload_file():
     return render_template("upload.html")
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect("home")
+
+def login_info():
+    if current_user.is_authenticated:
+        return "<div>" + current_user.username + "<a href='/logout'>&#160&#160&#160logout</a></div>"
+    else:
+        return "<div><a href='login'>login</a>&#160&#160&#160 <a href='/signup'>registrieren</a></div>"
 
 @app.route("/test_contest")
 def test_contest():
-    return render_template("/test_contest/test_contest_index.html")
+    return render_template("/test_contest/test_contest_index.html", login_info=login_info())
+
+@app.route("/test_contest/pizza_distribution_problem", methods=["POST", "GET"])
+def pizza_distribution_problem():
+    result = handle_task_submission("templates/test_contest/cf_pizza_distribution_problem.txt")
+    return render_template("/test_contest/pizza_distribution_problem.html", result=result)
 
 
 

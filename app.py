@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, request, redirect
+from flask import Flask, Blueprint, render_template, request, redirect, send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -152,10 +152,6 @@ def handle_task_submission(control_file, problem_name):
         else:
             return "falsch"
 
-
-
-
-
     return ""
 
 
@@ -183,8 +179,11 @@ def test_contest():
 @app.route("/test_contest/pizza_distribution_problem", methods=["POST", "GET"])
 @login_required
 def pizza_distribution_problem():
-    result = handle_task_submission("templates/test_contest/cf_pizza_distribution_problem.txt", "pizza_distribution_problem")
+    result = handle_task_submission("solutions/pizza_distribution_problem/output.txt", "pizza_distribution_problem")
     return render_template("/test_contest/pizza_distribution_problem.html", result=result)
+@app.route("/test_contest/pizza_distribution_problem/input.txt")
+def pizza_distribution_problem_download_input():
+    return send_from_directory("solutions/pizza_distribution_problem/", "input.txt")
 
 def reset_test_values():
     pass

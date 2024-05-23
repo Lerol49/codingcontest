@@ -1,12 +1,12 @@
 from flask import render_template, redirect, Blueprint, request, send_from_directory
+from flask_login import login_required
 from flask_login import login_user, login_required, current_user
 from werkzeug.security import check_password_hash
 
 from . import contest_data
 from .auth import login_info
 from .contest.contest_handling import handle_task_submission
-from .form import LoginForm
-from .models import User
+from flask_login import current_user
 
 views = Blueprint("views", __name__)
 
@@ -21,13 +21,10 @@ def page_0():
 def home():
     return render_template("/home.html", user=current_user)
 
+@views.route("/profile")
+def profile():
+    return render_template("/profile.html", data=current_user.get_user_data())
 
-
-
-
-@views.route("/upload", methods=["POST", "GET"])
-def test_upload_file():
-    return render_template("upload.html")
 
 
 @views.route("/test_contest")

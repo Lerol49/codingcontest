@@ -33,6 +33,8 @@ def login():
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
+        if User.query.filter_by(username=form.username.data).first() is not None:
+            return '<h1>User already exists</h1>'
         hashed_password = generate_password_hash(form.password.data)
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)

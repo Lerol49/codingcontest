@@ -1,12 +1,9 @@
 from flask import render_template, redirect, Blueprint, request, send_from_directory
 from flask_login import login_required
-from flask_login import login_user, login_required, current_user
-from werkzeug.security import check_password_hash
+from flask_login import current_user
 
 from . import contest_data
-from .auth import login_info
 from .contest.contest_handling import handle_task_submission
-from flask_login import current_user
 
 views = Blueprint("views", __name__)
 
@@ -21,9 +18,10 @@ def page_0():
 def home():
     return render_template("/home.html", user=current_user)
 
+@login_required
 @views.route("/profile")
 def profile():
-    return render_template("/profile.html", data=current_user.get_user_data())
+    return render_template("/profile.html", user=current_user)
 
 
 

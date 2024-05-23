@@ -8,12 +8,6 @@ from .form import RegistrationForm, LoginForm
 from .models import User
 
 
-def login_info():
-    if current_user.is_authenticated:
-        return "<div> <a href='profile' >" + current_user.username + "<a/> <a href='/logout'>&#160&#160&#160logout</a></div>"
-    else:
-        return "<div><a href='login'>login</a>&#160&#160&#160 <a href='/signup'>registrieren</a></div>"
-
 
 auth = Blueprint("auth", __name__)
 

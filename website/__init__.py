@@ -5,7 +5,6 @@ from flask_bootstrap import Bootstrap
 import secrets
 
 db = SQLAlchemy()
-login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__, template_folder="templates")
@@ -18,8 +17,6 @@ def create_app():
 
     # Initialize extensions
     db.init_app(app)
-    login_manager.init_app(app)
-    login_manager.login_view = "login"
     Bootstrap(app)
 
     # Import and register blueprints
@@ -27,5 +24,18 @@ def create_app():
     from .auth import auth
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+
+    with app.app_context():
+        db.create_all()
+
+    from .models import User
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     return app

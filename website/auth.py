@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect
+from flask import current_app as app
 from flask_login import current_user, logout_user, login_user, LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -15,16 +16,9 @@ def login_info():
 
 
 auth = Blueprint("auth", __name__)
-login_manager = LoginManager()
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
-def login_info():
-    if current_user.is_authenticated:
-        return f'Logged in as: {current_user.username}'
-    return 'Not logged in'
+
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():

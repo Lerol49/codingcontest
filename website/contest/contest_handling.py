@@ -9,7 +9,7 @@ from website.models import Problems
 from website import db
 
 
-def handle_task_submission(control_file, problem_name):
+def handle_task_submission(control_filename, problem_name):
     # checks if user has already submitted something
     user = Problems.query.filter_by(username=current_user.username).first()
     if user is None:
@@ -24,7 +24,7 @@ def handle_task_submission(control_file, problem_name):
             # submit_filename = secure_filename(submit_file.filename)
             # submit_filepath = os.path.join(app.config["UPLOAD_DIRECTORY"], submit_filename)
             # submit_file.save(submit_filepath)
-            correct = compare_output_file(submit_file.read(), control_file)
+            correct = compare_output_file(submit_file, control_filename)
             user = Problems.query.filter_by(username=current_user.username).first()
             current_data = getattr(user, problem_name)
             if correct:

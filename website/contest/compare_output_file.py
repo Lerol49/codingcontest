@@ -1,10 +1,10 @@
-def compare_output_file(submit_filename, control_filename) -> bool:
-    submit_file = submit_filename #open(submit_filename, "r")
-    print(submit_file)
-    control_file = open(control_filename, "rb").read()
-    print(control_file)
-    submit_file_content = submit_file
-    control_file_content = control_file
+def compare_output_file(submit_file, control_filename) -> bool:
+    submit_file = submit_file.read().decode("UTF-8")
+    control_file = open(control_filename, "rb").read().decode("UTF-8")
+    submit_list = list(map(str.strip, submit_file.replace("\r","").split("\n")))
+    control_list = list(map(str.strip, control_file.replace("\r","").split("\n")))
+    print(submit_list)
+    print(control_list)
 
-    return submit_file_content == control_file_content
+    return submit_list == control_list
 

@@ -11,7 +11,7 @@ def create_app():
 
     # Configure the Flask app
     app.config["UPLOAD_DIRECTORY"] = "uploads/"
-    app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB
+    app.config["MAX_CONTENT_LENGTH"] = 400 * 1024  # 400KB
     app.config["SECRET_KEY"] = secrets.token_hex(16)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 

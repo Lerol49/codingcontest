@@ -1,0 +1,26 @@
+
+
+{
+  "contests": {
+    "test_contest": {
+      "name": "Test Contest",
+      "problems": {
+          "pizza_distribution_problem":{
+            "name": "pizza distribution problem",
+
+            "difficulty": 2,
+            "points": 500
+          },
+          "test_problem": {
+            "name": "test problem",
+            "difficulty" : 9,
+            "points": 420
+          }
+
+      }
+
+    }
+
+  }
+
+}

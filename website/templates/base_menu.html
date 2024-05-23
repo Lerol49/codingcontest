@@ -12,7 +12,11 @@
     <body>
         <div id="top_bar">
             <div id="directory"></div>
-            <div id="login_info">{{login_info|safe}}</div>
+            {% if user.is_authenticated %}
+                <div id="login_info"><div> {{ user.username }} <a href='/logout'>    logout</a></div></div>
+            {% else %}
+                <div id="login_info"> <div><a href='login'>login</a>    <a href='/signup'>registrieren</a></div></div>
+            {% endif %}
         </div>
         <div id="menu">
             <div id="menu-items">

@@ -1,12 +1,9 @@
 from flask import render_template, redirect, Blueprint, request, send_from_directory
-<<<<<<< HEAD
 from flask_login import login_required
-=======
 from flask_login import login_user, login_required, current_user
 from werkzeug.security import check_password_hash
 
 from . import contest_data
->>>>>>> 1943e4c93ac60877ae5367c5845da81d378793f7
 from .auth import login_info
 from .contest.contest_handling import handle_task_submission
 from flask_login import current_user

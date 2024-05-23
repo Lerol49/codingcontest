@@ -46,3 +46,9 @@ def load_contest_problem(contest, problem):
 @views.route("/test_contest/pizza_distribution_problem/input.txt")
 def pizza_distribution_problem_download_input():
     return send_from_directory("../solutions/pizza_distribution_problem/", "input.txt")
+
+@views.route("input_files/<problem>")
+def send_input_file(problem):
+    return send_from_directory("../solutions/" + problem + "/", "input.txt")
+
+

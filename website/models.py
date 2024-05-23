@@ -25,4 +25,5 @@ class User(UserMixin, db.Model):
 class Problems(db.Model):
     username = db.Column(db.String(15), unique=True, primary_key=True)
     pizza_distribution_problem = db.Column(db.JSON, default={"passed": False, "tries": 0})
+    behoerdenrennen = db.Column(db.JSON, default={"passed": False, "tries": 0})
 

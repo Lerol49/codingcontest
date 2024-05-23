@@ -1,0 +1,40 @@
+{% extends "base_problem.html" %}
+
+{% block body %}
+<div id="question">
+<h1>Das Behördenrennen</h1>
+Du kommst in ein großes Bürogebäude, das von oben bis unten in allen <i>n</i> 
+Stockwerken genau eine deutsche Behörde sitzen hat. Du möchtest dir jetzt deinen
+neuen Personalausweis abholen, den du vor ein paar Monaten beantragt hast.
+Du weißt aber nicht genau, in welches Stockwerk du musst.
+Also fragst du einfach im Erdgeschoss nach und wirst dann in das vierte Stockwerk
+verwiesen. Dort angekommen wird aber behauptet, dass du in das dritte müsstest.
+Im dritten Stockwerk ist aber die Führerscheinbehörde, du solltest es doch mal im
+ersten Stock versuchen...
+<br><br><br>
+In der Input Datei steht in der ersten Zeile die Anzahl an Stockwerken n.
+Danach folgen alle Stockwerke von 0 (Erdgeschoss) bis n-1 mit einem Verweis auf
+ein anderes Stockwerk. Frage dich so lange durch, bis du in dem Stockwerk angekommen
+bist, in dem der Verweis die Zahl 0 ist, da ist die Personalausweisbehörde. <br>
+Gib alle Stockwerke, die du besucht hast in der richtigen Reihenfolge aus.
+<br><br><br><br>
+Beispiel (Die Bemerkungen rechts werden nicht mit übergeben):<br>
+5  &emsp;&emsp; # Anzahl an Stockwerken <br>
+4  &emsp;&emsp; # Erdgeschoss<br>
+0  &emsp;&emsp; # 1. Stock<br>
+2  &emsp;&emsp; # 2. Stock<br>
+1  &emsp;&emsp; # 3. Stock<br>
+3  &emsp;&emsp; # 4. Stock<br>
+<br><br><br><br>
+Output:<br>
+0<br>
+4<br>
+3<br>
+1<br>
+<br><br><br><br>
+
+
+<a href="../input_files/behoerdenrennen" download>input</a>
+</div>
+
+{% endblock %}

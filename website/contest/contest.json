@@ -11,9 +11,9 @@
             "difficulty": 2,
             "points": 500
           },
-          "test_problem": {
-            "name": "test problem",
-            "difficulty" : 9,
+          "behoerdenrennen": {
+            "name": "Behördenrennen",
+            "difficulty" : 1,
             "points": 420
           }
 

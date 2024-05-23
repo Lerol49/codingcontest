@@ -9,7 +9,7 @@ def get_ip_address():
     return s.getsockname()[0]
 
 
-local = False
+local = True
 
 if local:
     ip = "127.0.0.1"

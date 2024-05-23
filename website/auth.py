@@ -10,7 +10,7 @@ from .models import User
 
 def login_info():
     if current_user.is_authenticated:
-        return "<div>" + current_user.username + "<a href='/logout'>&#160&#160&#160logout</a></div>"
+        return "<div> <a href='profile' >" + current_user.username + "<a/> <a href='/logout'>&#160&#160&#160logout</a></div>"
     else:
         return "<div><a href='login'>login</a>&#160&#160&#160 <a href='/signup'>registrieren</a></div>"
 
@@ -43,6 +43,7 @@ def signup():
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
+        return redirect("/home")
 
     return render_template("signup.html", form=form)
 

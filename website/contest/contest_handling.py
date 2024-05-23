@@ -21,10 +21,10 @@ def handle_task_submission(control_file, problem_name):
     elif request.method == "POST":
         submit_file = request.files["file"]
         if submit_file:
-            submit_filename = secure_filename(submit_file.filename)
-            submit_filepath = os.path.join(app.config["UPLOAD_DIRECTORY"], submit_filename)
-            submit_file.save(submit_filepath)
-            correct = compare_output_file(submit_file, control_file)
+            # submit_filename = secure_filename(submit_file.filename)
+            # submit_filepath = os.path.join(app.config["UPLOAD_DIRECTORY"], submit_filename)
+            # submit_file.save(submit_filepath)
+            correct = compare_output_file(submit_file.read(), control_file)
             user = Problems.query.filter_by(username=current_user.username).first()
             current_data = getattr(user, problem_name)
             if correct:

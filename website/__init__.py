@@ -3,8 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 import secrets
+import json
 
 db = SQLAlchemy()
+with (open("website/contest/contest.json", "r")) as contest:
+    contest_data = json.load(contest)
 
 def create_app():
     app = Flask(__name__, template_folder="templates")

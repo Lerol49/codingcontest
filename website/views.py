@@ -44,4 +44,4 @@ def pizza_distribution_problem():
 
 @views.route("/test_contest/pizza_distribution_problem/input.txt")
 def pizza_distribution_problem_download_input():
-    return send_from_directory("solutions/pizza_distribution_problem/", "input.txt")
+    return send_from_directory("../solutions/pizza_distribution_problem/", "input.txt")

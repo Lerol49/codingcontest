@@ -10,7 +10,6 @@ views = Blueprint("views", __name__)
 
 @views.route("/")
 def page_0():
-    print("hallo")
     return redirect(request.url + "home")
 
 
@@ -40,7 +39,7 @@ def load_contest_problem(contest, problem):
         return "nein"
 
     result = handle_task_submission("solutions/" + problem + "/output.txt", problem)
-    return render_template("/" + contest + "/" + problem  + ".html", result=result)
+    return render_template("/" + contest + "/" + problem + ".html", result=result)
 
 
 @views.route("/test_contest/pizza_distribution_problem/input.txt")

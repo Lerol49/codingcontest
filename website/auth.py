@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, redirect
-from flask import current_app as app
-from flask_login import current_user, logout_user, login_user, LoginManager
+from flask_login import logout_user, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import db
@@ -39,11 +38,16 @@ def signup():
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
+        new_user.give_access_to_contest("test_contest")
         return redirect("/home")
 
     return render_template("signup.html", form=form)
+
 
 @auth.route("/logout")
 def logout():
     logout_user()
     return redirect("home")
+
+
+

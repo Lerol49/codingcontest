@@ -27,7 +27,7 @@ def profile():
 @views.route("/test_contest")
 @login_required
 def test_contest():
-    return render_template("/test_contest/test_contest_index.html", user=current_user)
+    return render_template("/test_contest/test_contest_index.html", user=current_user, problems=contest_data["contests"]["test_contest"]["problems"])
 
 
 @views.route("/<contest>/<problem>", methods=["POST", "GET"])

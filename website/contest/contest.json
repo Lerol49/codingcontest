@@ -6,7 +6,7 @@
       "name": "Test Contest",
       "problems": {
           "pizza_distribution_problem":{
-            "name": "pizza distribution problem",
+            "name": "Pizza Distribution's Problem",
 
             "difficulty": 2,
             "points": 500

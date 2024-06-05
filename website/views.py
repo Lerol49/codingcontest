@@ -30,16 +30,16 @@ def test_contest():
     return render_template("/test_contest/test_contest_index.html", user=current_user, problems=contest_data["contests"]["test_contest"]["problems"])
 
 
-@views.route("/<contest>/<problem>", methods=["POST", "GET"])
+@views.route("/<contest_name>/<problem>", methods=["POST", "GET"])
 @login_required
-def load_contest_problem(contest, problem):
-    if contest_data["contests"].get(contest) is None:
+def load_contest_problem(contest_name, problem):
+    if contest_data["contests"].get(contest_name) is None:
         return "no"
-    if contest_data["contests"][contest]["problems"].get(problem) is None:
+    if contest_data["contests"][contest_name]["problems"].get(problem) is None:
         return "nein"
 
-    result = handle_task_submission("solutions/" + problem + "/output.txt", problem)
-    return render_template("/" + contest + "/" + problem + ".html", result=result)
+    result = handle_task_submission(contest_name, problem, "solutions/" + problem + "/output.txt")
+    return render_template("/" + contest_name + "/" + problem + ".html", result=result)
 
 
 @views.route("/test_contest/pizza_distribution_problem/input.txt")

@@ -39,6 +39,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         new_user.give_access_to_contest("test_contest")
+        new_user.join_team("test_contest", "team1")
         return redirect("/home")
 
     return render_template("signup.html", form=form)

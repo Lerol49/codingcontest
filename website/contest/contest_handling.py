@@ -2,46 +2,72 @@ from flask import request
 from flask_login import current_user
 
 from website.contest.compare_output_file import compare_output_file
-from website.models import User
+from website.models import User, get_users_of_team
 
 
 
 
-def handle_task_submission(control_filename, problem_name):
+def handle_task_submission(contest_name, problem_name, control_filename):
     user = User.query.filter_by(username=current_user.username).first()
 
 
-    # handles upload of new try
+    # handles upload try
     if request.method == "POST":
-        submit_file = request.files["file"]
-        if submit_file:
-
-            correct = compare_output_file(submit_file, control_filename)
-
-            user.add_try(problem_name)
-            if correct:
-                user.mark_solved(problem_name)
-                return "richtig!"
-            else:
-                user.mark_unsolved(problem_name)
-                return "falsch!"
+        return _add_try(user, contest_name, problem_name, control_filename)
 
 
     # displays no feedback if no tries have been made
-    elif user.get_tries_count(problem_name) == 0:
-        return ""
+    # elif user.get_tries_count(problem_name) == 0:
+    #     return ""
 
-
-
-    # displays the result of the last try
+    # display previous result
     else:
         if user.get_problem_status(problem_name):
             return "richtig"
         else:
             return "falsch"
 
-    return ""
 
+
+def _add_try(user, contest_name, problem_name, control_filename):
+    submit_file = request.files["file"]
+    if submit_file:
+
+        submission_result = compare_output_file(submit_file, control_filename)
+        team = user.get_team(contest_name)
+
+        if team is None:
+            _add_try_individual(user, problem_name, submission_result)
+
+        else:
+            _add_try_team(team, contest_name, problem_name, submission_result)
+
+        if submission_result:
+            return "richtig!"
+        else:
+            return "falsch!"
+
+
+
+def _get_previous_result(user, problem_name):
+    user.get_problem_status(problem_name)
+
+def _add_try_individual(user, problem_name, submission_result):
+    user.increment_tries_counter(problem_name)
+    _save_submission_result(user, problem_name, submission_result)
+
+
+def _add_try_team(team, contest_name, problem_name, submission_result):
+    team_members = get_users_of_team(team, contest_name)
+    for user in team_members:
+        _add_try_individual(user, problem_name, submission_result)
+
+
+def _save_submission_result(user, problem_name, submission_result):
+    if submission_result:
+        user.mark_solved(problem_name)
+    else:
+        user.mark_unsolved(problem_name)
 
 
 

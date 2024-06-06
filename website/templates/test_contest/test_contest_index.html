@@ -1,11 +1,27 @@
 {% extends "base_menu.html" %}
 
 {% block body %}
-<div class="menu-item"> <b><u>Test Contest</u></b> </div>
-    {% for problem in problems.keys() %}
+    <div class="grid grid-cols-2 gap-2 mt-2">
+        <div class="bg-red-400 rounded-lg shadow-xl h-screen ml-2">
+        <p class="text-center font-bold text-2xl">Test-Contest</p>
+        <div class="divide-y">
+            {% for problem in problems.keys() %}
 
-        <div> <a class="menu-item" href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a> </div>
+            <div>
+                <a class="mt-2 font-semibold text-lg ml-2" href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
+            </div>
+            {% endfor %}
+        </div>
 
-    {% endfor %}
+
+        </div>
+        <div class="bg-emerald-400 rounded-lg shadow-xl h-screen mr-2"></div>
+
+
+    </div>
+
+
+
+
 {% endblock %}
 

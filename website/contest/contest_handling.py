@@ -9,7 +9,6 @@ from website.models import User
 
 def handle_task_submission(control_filename, problem_name):
     user = User.query.filter_by(username=current_user.username).first()
-    user.set_current_problem(problem_name)
 
 
     # handles upload of new try
@@ -19,23 +18,24 @@ def handle_task_submission(control_filename, problem_name):
 
             correct = compare_output_file(submit_file, control_filename)
 
-            user.add_try()
+            user.add_try(problem_name)
             if correct:
-                user.mark_solved()
+                user.mark_solved(problem_name)
                 return "richtig!"
             else:
-                user.mark_unsolved()
+                user.mark_unsolved(problem_name)
                 return "falsch!"
 
 
     # displays no feedback if no tries have been made
-    elif user.get_tries_count() == 0:
+    elif user.get_tries_count(problem_name) == 0:
         return ""
+
 
 
     # displays the result of the last try
     else:
-        if user.get_problem_status():
+        if user.get_problem_status(problem_name):
             return "richtig"
         else:
             return "falsch"

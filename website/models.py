@@ -16,37 +16,35 @@ class User(UserMixin, db.Model):
     contest_access = db.Column(db.JSON, default={"contests": []})
 
     problems_data = db.Column(db.JSON, default={})
+    problem_name = ""
 
 
-    def _commit(self):
+    def _commit_problems_data(self):
         attributes.flag_modified(self, "problems_data")
         db.session.commit()
 
-    def set_current_problem(self, problem_name):
-        self.current_problem_name = problem_name
+    def add_try(self, problem_name):
+        self.problems_data[problem_name]["tries"] += 1
+        self._commit_problems_data()
 
-    def add_try(self):
-        self.problems_data[self.current_problem_name]["tries"] += 1
-        self._commit()
+    def mark_solved(self, problem_name):
+        self.problems_data[problem_name]["solved"] = True
+        self._commit_problems_data()
 
-    def mark_solved(self):
-        self.problems_data[self.current_problem_name]["solved"] = True
-        self._commit()
+    def mark_unsolved(self, problem_name):
+        self.problems_data[problem_name]["solved"] = False
+        self._commit_problems_data()
 
-    def mark_unsolved(self):
-        self.problems_data[self.current_problem_name]["solved"] = False
-        self._commit()
+    def get_tries_count(self, problem_name) -> int:
+        return self.problems_data[problem_name]["tries"]
 
-    def get_tries_count(self) -> int:
-        return self.problems_data[self.current_problem_name]["tries"]
-
-    def get_problem_status(self) -> bool:
-        return self.problems_data[self.current_problem_name]["solved"]
+    def get_problem_status(self, problem_name) -> bool:
+        return self.problems_data[problem_name]["solved"]
 
 
     def give_access_to_problem(self, problem_name):
         self.problems_data[problem_name] = {"solved": False, "tries": 0}
-        self._commit()
+        self._commit_problems_data()
 
     def give_access_to_contest(self, contest_name):
         from . import contest_data

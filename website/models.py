@@ -1,7 +1,6 @@
 from . import db
 from flask_login import UserMixin
-from sqlalchemy.orm import attributes
-
+from sqlalchemy.orm import attributes, Session
 
 
 class User(UserMixin, db.Model):
@@ -16,7 +15,7 @@ class User(UserMixin, db.Model):
     contest_data = db.Column(db.JSON, default={})
 
 
-    # {"<problem_name>": {"solved": False, "tries": 0}, "probl..."}
+    # {"<problem_name>": [<bool: solved>, <int: count>], "probl..."}
     problems_data = db.Column(db.JSON, default={})
 
 
@@ -28,12 +27,8 @@ class User(UserMixin, db.Model):
         self.problems_data[problem_name][1] += 1
         self._commit_problems_data()
 
-    def mark_solved(self, problem_name):
-        self.problems_data[problem_name][0] = True
-        self._commit_problems_data()
-
-    def mark_unsolved(self, problem_name):
-        self.problems_data[problem_name][0] = False
+    def set_submission_result(self, problem_name, result):
+        self.problems_data[problem_name][0] = result
         self._commit_problems_data()
 
     def get_tries_count(self, problem_name) -> int:
@@ -42,13 +37,9 @@ class User(UserMixin, db.Model):
     def get_problem_status(self, problem_name) -> bool:
         return self.problems_data[problem_name][0]
 
-    def get_team(self, contest_name):
-        return self.contest_data[contest_name]
-
-
     def give_access_to_problem(self, problem_name):
         self.problems_data[problem_name] = [False, 0]
-        self._commit_problems_data()
+        print(self.problems_data)
 
 
     def give_access_to_contest(self, contest_name):
@@ -60,23 +51,92 @@ class User(UserMixin, db.Model):
 
         self.contest_data[contest_name] = None
         attributes.flag_modified(self, "contest_data")
-        db.session.commit()
 
         for problem_name in contest_data["contests"][contest_name]["problems"]:
             self.give_access_to_problem(problem_name)
 
+        self._commit_problems_data()
 
-    def join_team(self, contest_name, group_name):
-        if contest_name in self.contest_data:
-            self.contest_data[contest_name] = group_name
 
+    def _join_team(self, contest_name, team_name):
+        self.contest_data[contest_name] = team_name
         attributes.flag_modified(self, "contest_data")
         db.session.commit()
 
 
-def get_users_of_team(team, contest_name):
-    users = db.session.query(User).filter(User.contest_data[contest_name] is not None).all()
-    return users
+    def get_team(self, contest_id):
+        team = Team.query.filter((Team.name == self.contest_data[contest_id]) & (Team.contest_id == contest_id)).first()
+        return team
+
+
+
+class Team(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    contest_id = db.Column(db.String())
+    members = db.Column(db.JSON, default={"names": []})
+    password = db.Column(db.String())
+    stats = db.Column(db.JSON, default={})
+
+
+    def _commit(self, location):
+        attributes.flag_modified(self, location)
+        db.session.commit()
+
+    def get_users(self):
+        """returns List of all User Objects associated with the team"""
+        members_objects = []
+        for member in self.members["names"]:
+            members_objects.append(User.query.filter_by(username=member).first())
+        return members_objects
+
+
+    def add_member(self, user):
+        self.members["names"].append(user.username)
+        self._commit("members")
+        user._join_team(self.contest_id, self.name)
+
+    def increment_tries_counter(self, problem_id):
+        self.stats[problem_id][1] += 1
+        self._commit("stats")
+
+    def set_submission_result(self, problem_name, result):
+        self.stats[problem_name][0] = result
+        self._commit("stats")
+
+    def get_tries_count(self, problem_name) -> int:
+        return self.stats[problem_name][1]
+
+    def get_problem_status(self, problem_name) -> bool:
+        return self.stats[problem_name][0]
+
+
+
+def create_new_team(creator, team_name, contest_id):
+    """creates, returnes and saves new Team Object.
+    To add a new member call team.add_member(user).
+    """
+    from . import contest_data
+
+    stats = {}
+    for problem in contest_data["contests"][contest_id]["problems"]:
+        stats[problem] = [False, 0]
+
+    team = Team(name=team_name, contest_id=contest_id, stats=stats)
+    db.session.add(team)
+    db.session.commit()
+    team.add_member(creator)
+
+    return team
+
+
+def create_new_user(username, password):
+    """creates, returnes and saves new User Object"""
+    new_user = User(username=username, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return new_user
 
 
 

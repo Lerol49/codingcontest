@@ -1,74 +1,72 @@
 from flask import request
 from flask_login import current_user
+from website.models import User
 
 from website.contest.compare_output_file import compare_output_file
-from website.models import User, get_users_of_team
 
 
 
 
 def handle_task_submission(contest_name, problem_name, control_filename):
     user = User.query.filter_by(username=current_user.username).first()
+    team = user.get_team(contest_name)
+
+    output_to_html = ""
 
 
     # handles upload try
     if request.method == "POST":
-        return _add_try(user, contest_name, problem_name, control_filename)
+        submit_file = request.files["file"]
+        if submit_file:
+            submission_result = compare_output_file(submit_file, control_filename)
+            _add_try(user, team, problem_name, submission_result)
+
+            if submission_result:
+                output_to_html = "richtig!"
+            else:
+                output_to_html = "falsch!"
 
 
-    # displays no feedback if no tries have been made
-    # elif user.get_tries_count(problem_name) == 0:
-    #     return ""
 
     # display previous result
     else:
-        if user.get_problem_status(problem_name):
-            return "richtig"
+        if not has_previous_submission(user, team, problem_name):
+            output_to_html = ""
+        elif get_previous_result(user, team, problem_name):
+            output_to_html = "richtig"
         else:
-            return "falsch"
+            output_to_html = "falsch"
 
 
-
-def _add_try(user, contest_name, problem_name, control_filename):
-    submit_file = request.files["file"]
-    if submit_file:
-
-        submission_result = compare_output_file(submit_file, control_filename)
-        team = user.get_team(contest_name)
-
-        if team is None:
-            _add_try_individual(user, problem_name, submission_result)
-
-        else:
-            _add_try_team(team, contest_name, problem_name, submission_result)
-
-        if submission_result:
-            return "richtig!"
-        else:
-            return "falsch!"
+    return output_to_html
 
 
+def _add_try(user, team, problem_name, submission_result):
+    _add_try_individual(user, problem_name, submission_result)
+    if team is not None:
+        _add_try_team(team, problem_name, submission_result)
 
-def _get_previous_result(user, problem_name):
-    user.get_problem_status(problem_name)
 
 def _add_try_individual(user, problem_name, submission_result):
     user.increment_tries_counter(problem_name)
-    _save_submission_result(user, problem_name, submission_result)
+    user.set_submission_result(problem_name, submission_result)
 
 
-def _add_try_team(team, contest_name, problem_name, submission_result):
-    team_members = get_users_of_team(team, contest_name)
-    for user in team_members:
-        _add_try_individual(user, problem_name, submission_result)
+def _add_try_team(team, problem_name, submission_result):
+    team.increment_tries_counter(problem_name)
+    team.set_submission_result(problem_name, submission_result)
 
 
-def _save_submission_result(user, problem_name, submission_result):
-    if submission_result:
-        user.mark_solved(problem_name)
+def get_previous_result(user, team, problem_name):
+    if team is None:
+        return user.get_problem_status(problem_name)
     else:
-        user.mark_unsolved(problem_name)
+        return team.get_problem_status(problem_name)
 
+def has_previous_submission(user, team, problem_name):
+    if team is not None:
+        return team.get_tries_count(problem_name) != 0
+    return user.get_tries_count(problem_name) != 0
 
 
 

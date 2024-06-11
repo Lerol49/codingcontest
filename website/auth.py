@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import db
 from .form import RegistrationForm, LoginForm
-from .models import User
+from .models import User, Team, create_new_team, create_new_user
 
 
 
@@ -36,10 +36,15 @@ def signup():
         if User.query.filter_by(username=form.username.data).first() is not None:
             return '<h1>User already exists</h1>'
         hashed_password = generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+
+        new_user = create_new_user(username=form.username.data, password=hashed_password)
         new_user.give_access_to_contest("test_contest")
+
+        if new_user.username == "max":
+            create_new_team(new_user, "team1", "test_contest", "aaaa")
+        else:
+            Team.query.filter_by(name="team1").first().add_member(new_user)
+
         return redirect("/home")
 
     return render_template("signup.html", form=form)

@@ -4,6 +4,7 @@
   "contests": {
     "test_contest": {
       "name": "Test Contest",
+      "team_size": 2,
       "problems": {
           "pizza_distribution_problem":{
             "name": "Pizza Distribution Problem",

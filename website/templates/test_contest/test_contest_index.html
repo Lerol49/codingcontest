@@ -1,4 +1,4 @@
-{% extends "base_menu.html" %}
+{% extends "./base_menu.html" %}
 
 {% block body %}
     <div class="grid grid-cols-2 gap-2 mt-2">
@@ -7,7 +7,8 @@
         <div class="divide-y">
             {% for problem in problems.keys() %}
 
-            <div>
+            <div class="flex flex-row items-center ml-2">
+                <p class="font-bold text-xl">{{ loop.index }}.</p>
                 <a class="mt-2 font-semibold text-lg ml-2" href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
             </div>
             {% endfor %}

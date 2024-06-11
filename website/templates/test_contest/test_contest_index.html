@@ -1,4 +1,5 @@
 {% extends "./base_menu.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
     <div class="grid grid-cols-2 gap-2 mt-2">
@@ -16,7 +17,42 @@
 
 
         </div>
-        <div class="bg-emerald-400 rounded-lg shadow-xl h-screen mr-2"></div>
+        <div class="bg-emerald-400 rounded-lg shadow-xl h-screen mr-2">
+
+            {% if team %}
+                <p class="text-center font-bold text-2xl">{{team.name}}</p>
+                {% for member in team.get_members() %}
+                    {{member.username}}
+                {% endfor %}
+            {% else %}
+            <div class="divide-y">
+                <div>
+                <p class="text-center font-bold text-2xl">Erstelle ein Team</p>
+
+                <form action="" method="post">
+                    <input type="text" name="new_teamname" placeholder="Teamname" value="{{request.form.username}}">
+                    <input type="text" name="password" placeholder="Passowrt" value="{{request.form.username}}">
+                    <input class="btn btn-default" type="submit">
+                </form>
+
+
+                </div>
+                <div>
+                <p class="text-center font-bold text-2xl">Trete einem Team bei</p>
+
+                <form action="" method="post">
+                <input type="text" name="teamname" placeholder="Teamname" value="{{request.form.username}}">
+                <input type="text" name="password" placeholder="Passowrt" value="{{request.form.username}}">
+                <input class="btn btn-default" type="submit">
+                </form>
+
+
+                </div>
+            </div>
+            {% endif %}
+
+
+        </div>
 
 
     </div>

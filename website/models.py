@@ -1,6 +1,6 @@
 from . import db
 from flask_login import UserMixin
-from sqlalchemy.orm import attributes, Session
+from sqlalchemy.orm import attributes
 
 
 class User(UserMixin, db.Model):
@@ -39,7 +39,6 @@ class User(UserMixin, db.Model):
 
     def give_access_to_problem(self, problem_name):
         self.problems_data[problem_name] = [False, 0]
-        print(self.problems_data)
 
 
     def give_access_to_contest(self, contest_name):
@@ -83,7 +82,7 @@ class Team(db.Model):
         attributes.flag_modified(self, location)
         db.session.commit()
 
-    def get_users(self):
+    def get_members(self):
         """returns List of all User Objects associated with the team"""
         members_objects = []
         for member in self.members["names"]:
@@ -109,6 +108,10 @@ class Team(db.Model):
 
     def get_problem_status(self, problem_name) -> bool:
         return self.stats[problem_name][0]
+
+
+
+
 
 
 

@@ -1,0 +1,9 @@
+{% extends "base_menu.html" %}
+
+{% block body %}
+<h1>List of contests:</h1>
+
+{% for contest in contests.keys() %}
+    <a href="/admin/{{ contest }}">{{ contest }}</a>
+{% endfor %}
+{% endblock %}

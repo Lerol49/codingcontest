@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="static/css/output.css">
+        <link rel="stylesheet" href="../static/css/output.css">
 
 
 
@@ -17,12 +17,15 @@
 
         <div class="top-0 w-screen shadow-xl flex flex-row h-14 items-center justify-between bg-gradient-to-r from-gray-700 to-gray-800">
             <div class="ml-6 font-sans font-bold text-2xl text-white">
-                <p>CodingContest</p>
+                <a href="/home">CodingContest</a>
             </div>
 
 
 
             <div class="flex items-center font-sans font-semibold text-lg text-white ">
+            {% if user.rights == "admin" %}
+                <div class="mx-4 hover:text-pink-400"><a href='/admin'>Admin-Dashboard</a></div>
+            {% endif %}
             {% if user.is_authenticated %}
                 <div class="mx-4 hover:text-pink-400"><a href='profile'>Profil</a></div>
                 <div class="mx-6 hover:text-pink-400"><a href='/logout'>Logout</a></div>
@@ -40,7 +43,7 @@
 
 
     </body>
-    <script src="static/javascript/base.js"></script>
+
         {% block scripts %}{% endblock %}
     
 </html>

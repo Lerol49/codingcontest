@@ -24,6 +24,7 @@ def login():
                 login_user(user, remember=form.remember.data)
                 return redirect("home")
             return '<h1>Invalid username or password</h1>'
+        return "<h1>Invalid username or password</h1>"
     return render_template('login.html', form=form)
 
 

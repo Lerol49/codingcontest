@@ -40,7 +40,7 @@ def signup():
         new_user.give_access_to_contest("test_contest")
 
         if new_user.username == "max":
-            create_new_team(new_user, "team1", "test_contest")
+            create_new_team(new_user, "team1", "test_contest", "aaaa")
         else:
             Team.query.filter_by(name="team1").first().add_member(new_user)
 

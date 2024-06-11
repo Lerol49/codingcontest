@@ -112,7 +112,7 @@ class Team(db.Model):
 
 
 
-def create_new_team(creator, team_name, contest_id):
+def create_new_team(creator, team_name, contest_id, hashed_password):
     """creates, returnes and saves new Team Object.
     To add a new member call team.add_member(user).
     """
@@ -122,7 +122,7 @@ def create_new_team(creator, team_name, contest_id):
     for problem in contest_data["contests"][contest_id]["problems"]:
         stats[problem] = [False, 0]
 
-    team = Team(name=team_name, contest_id=contest_id, stats=stats)
+    team = Team(name=team_name, contest_id=contest_id, stats=stats, password=hashed_password)
     db.session.add(team)
     db.session.commit()
     team.add_member(creator)

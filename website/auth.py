@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .form import RegistrationForm, LoginForm, CreateTeam, JoinTeam
 from .models import User, Team
-from . import models
+from . import models, contest_data
 
 
 auth = Blueprint("auth", __name__)
@@ -50,16 +50,23 @@ def signup():
 
 
 def create_team():
+    contest_id = "test_contest"
     form = CreateTeam()
     password = generate_password_hash(form.password.data)
-    models.create_new_team(current_user, form.new_teamname.data, "test_contest", password)
+    if Team.query.filter_by(name=form.new_teamname.data, contest_id=contest_id).first() is None:
+        models.create_new_team(current_user, form.new_teamname.data, "test_contest", password)
+    else:
+        print("hi")
+        return False # irgendwie eine Fehlermeldung displayen
 
 
 def join_team():
     form = JoinTeam()
-    team = Team.query.filter_by(name=form.teamname.data, contest_id="test_contest").first()
+    contest_id = "test_contest"
+    team = Team.query.filter_by(name=form.teamname.data, contest_id=contest_id).first()
     if team is not None and check_password_hash(team.password, form.password.data):
-        team.add_member(current_user)
+        if len(team.get_members()) < contest_data["contests"][contest_id]["team_size"]:
+            team.add_member(current_user)
 
 
 

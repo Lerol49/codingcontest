@@ -3,8 +3,7 @@ from flask_login import current_user
 from website.models import User
 
 from website.contest.compare_output_file import compare_output_file
-
-
+from website.leaderboard import eval_score
 
 
 def handle_task_submission(contest_name, problem_name, control_filename):
@@ -20,6 +19,7 @@ def handle_task_submission(contest_name, problem_name, control_filename):
         if submit_file:
             submission_result = compare_output_file(submit_file, control_filename)
             _add_try(user, team, problem_name, submission_result)
+            eval_score(contest_name)
 
             if submission_result:
                 output_to_html = "richtig!"
@@ -42,8 +42,8 @@ def handle_task_submission(contest_name, problem_name, control_filename):
 
 
 def _add_try(user, team, problem_name, submission_result):
-    _add_try_individual(user, problem_name, submission_result)
     if team is not None:
+        _add_try_individual(user, problem_name, submission_result)
         _add_try_team(team, problem_name, submission_result)
 
 

@@ -110,11 +110,12 @@ class Team(db.Model):
         return self.stats[problem_name][0]
 
     def get_score(self):
-        score = 0
-        for problem in self.stats:
-            if self.stats[problem][0] is True:
-                score += 1
-        return score
+        return self.stats["_score"]
+
+    def add_to_score(self, additional_score):
+        self.stats["_score"] += additional_score
+        self._commit("stats")
+
 
 
 
@@ -131,7 +132,7 @@ def create_new_team(creator, team_name, contest_id, hashed_password):
     """
     from . import contest_data
 
-    stats = {}
+    stats = {"_score": 0}
     for problem in contest_data["contests"][contest_id]["problems"]:
         stats[problem] = [False, 0]
 

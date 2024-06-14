@@ -23,7 +23,7 @@ def admin_required(func):
             return current_app.ensure_sync(func)(*args, **kwargs)
         except AttributeError:  # pragma: no cover
             return func(*args, **kwargs)
-    return wrapper
+    return wrapper 
 
 
 @views.route("/")

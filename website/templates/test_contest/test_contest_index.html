@@ -2,60 +2,57 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
-    <div class="grid grid-cols-2 gap-2 mt-2">
-        <div class="bg-red-400 rounded-lg shadow-xl h-screen ml-2">
+<div class="grid grid-cols-2 gap-2 mt-2">
+    <div class="bg-red-400 rounded-lg shadow-xl h-screen ml-2">
         <p class="text-center font-bold text-2xl">Test-Contest</p>
         <div class="divide-y">
             {% for problem in problems.keys() %}
-
             <div class="flex flex-row items-center ml-2">
                 <p class="font-bold text-xl">{{ loop.index }}.</p>
                 <a class="mt-2 font-semibold text-lg ml-2" href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
             </div>
-            {% endfor %}
+        {% endfor %}
         </div>
-
-
-        </div>
-        <div class="bg-emerald-400 rounded-lg shadow-xl h-screen mr-2">
-
-            {% if team %}
-                <p class="text-center font-bold text-2xl">{{team.name}}</p>
-                {% for member in team.get_members() %}
-                    {{member.username}}
-                {% endfor %}
-            {% else %}
-            <div class="divide-y">
-                <div>
-                <p class="text-center font-bold text-2xl">Erstelle ein Team</p>
-
-                <form action="" method="post">
-                    <input type="text" name="new_teamname" placeholder="Teamname" value="{{request.form.username}}">
-                    <input type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
-                    <input class="btn btn-default" type="submit">
-                </form>
-
-
-                </div>
-                <div>
-                <p class="text-center font-bold text-2xl">Trete einem Team bei</p>
-
-                <form action="" method="post">
-                <input type="text" name="teamname" placeholder="Teamname" value="{{request.form.username}}">
-                <input type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
-                <input class="btn btn-default" type="submit">
-                </form>
-
-
-                </div>
-            </div>
-            {% endif %}
-
-
-        </div>
-
-
     </div>
+
+
+    <div class="bg-emerald-400 rounded-lg shadow-xl h-screen mr-2">
+        <div class="divide-y">
+            {% if team %}
+                <div>
+                    <p class="text-center font-bold text-2xl">{{team.name}}</p>
+                    {% for member in team.get_members() %}
+                        <p>{{member.username}}</p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div>
+                    <p class="text-center font-bold text-2xl">Erstelle ein Team</p>
+                    <form action="" method="post">
+                        <input type="text" name="new_teamname" placeholder="Teamname" value="{{request.form.username}}">
+                        <input type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
+                        <input class="btn btn-default" type="submit">
+                    </form>
+                </div>
+
+                <div>
+                    <p class="text-center font-bold text-2xl">Trete einem Team bei</p>
+                    <form action="" method="post">
+                        <input type="text" name="teamname" placeholder="Teamname" value="{{request.form.username}}">
+                        <input type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
+                        <input class="btn btn-default" type="submit">
+                    </form>
+                </div>
+            {% endif %}
+                <div>
+                    <p class="text-center font-bold text-2xl">Leaderboard</p>
+                    {% for team in teams %}
+                    <p>{{team.name}} has a score of {{team.get_score()}}</p>
+                    {% endfor %}
+                </div>
+        </div> <!--hier endet divide-y-->
+    </div>
+</div>
 
 
 

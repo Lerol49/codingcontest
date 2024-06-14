@@ -3,6 +3,7 @@ from flask import render_template, redirect, Blueprint, request, send_from_direc
 from flask_login import login_required
 from flask_login import current_user
 from . import auth
+from .models import get_teams
 
 
 
@@ -57,7 +58,8 @@ def test_contest():
     return render_template("/test_contest/test_contest_index.html",
                            user=current_user,
                            team=current_user.get_team("test_contest"),
-                           problems=contest_data["contests"]["test_contest"]["problems"])
+                           problems=contest_data["contests"]["test_contest"]["problems"],
+                           teams=get_teams("test_contest"))
 
 
 @views.route("/<contest_name>/<problem>", methods=["POST", "GET"])

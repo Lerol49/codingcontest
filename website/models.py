@@ -16,29 +16,29 @@ class User(UserMixin, db.Model):
 
 
     # {"<problem_name>": [<bool: solved>, <int: count>], "probl..."}
-    problems_data = db.Column(db.JSON, default={})
+    stats = db.Column(db.JSON, default={})
 
 
-    def _commit_problems_data(self):
-        attributes.flag_modified(self, "problems_data")
+    def _commit_stats(self):
+        attributes.flag_modified(self, "stats")
         db.session.commit()
 
     def increment_tries_counter(self, problem_name):
-        self.problems_data[problem_name][1] += 1
-        self._commit_problems_data()
+        self.stats[problem_name][1] += 1
+        self._commit_stats()
 
     def set_submission_result(self, problem_name, result):
-        self.problems_data[problem_name][0] = result
-        self._commit_problems_data()
+        self.stats[problem_name][0] = result
+        self._commit_stats()
 
     def get_tries_count(self, problem_name) -> int:
-        return self.problems_data[problem_name][1]
+        return self.stats[problem_name][1]
 
     def get_problem_status(self, problem_name) -> bool:
-        return self.problems_data[problem_name][0]
+        return self.stats[problem_name][0]
 
     def give_access_to_problem(self, problem_name):
-        self.problems_data[problem_name] = [False, 0]
+        self.stats[problem_name] = [False, 0]
 
 
     def give_access_to_contest(self, contest_name):
@@ -54,7 +54,7 @@ class User(UserMixin, db.Model):
         for problem_name in contest_data["contests"][contest_name]["problems"]:
             self.give_access_to_problem(problem_name)
 
-        self._commit_problems_data()
+        self._commit_stats()
 
 
     def _join_team(self, contest_name, team_name):
@@ -109,8 +109,18 @@ class Team(db.Model):
     def get_problem_status(self, problem_name) -> bool:
         return self.stats[problem_name][0]
 
+    def get_score(self):
+        score = 0
+        for problem in self.stats:
+            if self.stats[problem][0] is True:
+                score += 1
+        return score
 
 
+
+
+def get_teams(contest_id):
+    return Team.query.filter_by(contest_id=contest_id).all()
 
 
 
@@ -143,6 +153,10 @@ def create_new_user(username, password):
 
 
 
+
+
+
+# TODO: warum wird der score nicht größer als null
 
 
 

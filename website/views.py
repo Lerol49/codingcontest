@@ -90,7 +90,10 @@ def load_admin_main():
 @admin_required
 def load_admin_contest(contest):
     """loading admin config page for specific contest"""
-    return render_template("/admin_contest_config.html", user=current_user)
+    if contest_data["contests"].get(contest) is None:
+        return "no"
+    return render_template("/admin_contest_config.html", user=current_user,
+                           problems=contest_data["contests"][contest]["problems"], teams=get_teams(contest))
 
 
 

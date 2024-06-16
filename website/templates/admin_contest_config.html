@@ -7,15 +7,15 @@
 
 {% block body %}
 <div class="grid grid-cols-3">
-	<button onclick="loadProblemsPage()" class="bg-red-400 hover:bg-red-600 shadow-xl h-12">
+	<button onclick="loadProblemsPage()" class="bg-adminColor hover:bg-adminColorHover shadow-xl h-12 text-gray-100 text-lg font-semibold">
 		<p>Problems</p>
 	</button>
 
-	<button onclick="loadParticipantsPage()" class="bg-red-400 hover:bg-red-600 shadow-xl h-12 text-center">
+	<button onclick="loadParticipantsPage()" class="bg-adminColor hover:bg-adminColorHover shadow-xl h-12 text-gray-100 text-lg font-semibold">
 		<p>Participants</p>
 	</button>
 
-	<button class="bg-red-400 hover:bg-red-600 shadow-xl h-12">
+	<button class="bg-adminColor hover:bg-adminColorHover shadow-xl h-12 text-gray-100 text-lg font-semibold">
 		<p>Settings</p>
 	</button>
 </div>
@@ -41,9 +41,45 @@
 </div>
 
 <div id="participants_field" class="hidden">
-	<div>
+    <table class="w-full text-md text-center">
+        <thead class="text-lg uppercase bg-adminTeamTableColor h-12 shadow-2xl rtl:text-right text-gray-500">
+            <tr>
+                <th scope="col">
+                    Team name
+                </th>
+                <th scope="col">
+                    Member count
+                </th>
+                <th scope="col">
+                    Members
+                </th>
+                <th scope="col">
+                    Score
+                </th>
+            </tr>
 
-	</div>
+        </thead>
+        <tbody class="">
+            {% for team in teams %}
+            <tr class="odd:bg-adminTeamTableContentDark even:bg-adminTeamTableContentLight">
+                <th scope="col">
+                    {{ team.name }}
+                </th>
+                <th scope="col">
+                    {{ team.get_members()|length }}
+                </th>
+                <th scope="col" class="">
+                    {% for member in team.get_members() %}
+                        <a href="/profile/{{ member.id }}" class="">{{ member.username }}</a>
+                    {% endfor %}
+                </th>
+                <th scope="col">
+                    {{ team.get_score() }}
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 

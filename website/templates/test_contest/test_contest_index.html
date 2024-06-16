@@ -2,54 +2,144 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
-<div class="grid grid-cols-2 gap-2 mt-2">
-    <div class="bg-red-400 rounded-lg shadow-xl h-screen ml-2">
-        <p class="text-center font-bold text-2xl">Test-Contest</p>
-        <div class="divide-y">
-            {% for problem in problems.keys() %}
-            <div class="flex flex-row items-center ml-2">
-                <p class="font-bold text-xl">{{ loop.index }}.</p>
-                <a class="mt-2 font-semibold text-lg ml-2" href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
-            </div>
-        {% endfor %}
-        </div>
+<div class="grid grid-cols-2 gap-3 mt-3">
+    <div class="bg-contestLeft shadow-xl ml-3 rounded-2xl">
+        <p class="text-white text-center font-bold text-2xl mt-2">Test-Contest</p>
+        <table class="w-full">
+            <thead class="bg-contestLeftTableHead text-lg uppercase h-12 rtl:text-right text-white">
+                <tr>
+                    <th class="text-left pl-4">
+                        <p>Problem name</p>
+                    </th>
+                    <th class="text-center">
+                        <p>Solves</p>
+                    </th>
+                    <th class="text-center">
+                        <p>Points</p>
+                    </th>
+                    <th class="text-center">
+                        <p>Solved</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for problem in problems.keys() %}
+                    <tr class="odd:bg-contestLeftTableOdd even:bg-contestLeftTableEven">
+                        <td class="text-left pl-4">
+                            <a href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
+                        </td>
+                        <td class="text-center">
+                            <p>2</p>
+                        </td>
+                        <td class="text-center">
+                            <p>453</p>
+                        </td>
+                        <td class="text-center">
+                            <p>y</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
     </div>
 
 
-    <div class="bg-emerald-400 rounded-lg shadow-xl h-screen mr-2">
-        <div class="divide-y">
+    <div class="bg-adminColor shadow-xl h-screen mr-3 rounded-2xl">
+        <div class="">
             {% if team %}
-                <div>
-                    <p class="text-center font-bold text-2xl">{{team.name}}</p>
-                    {% for member in team.get_members() %}
-                        <p>{{member.username}}</p>
-                    {% endfor %}
-                </div>
+
+
+
+
+                <p class="uppercase text-center font-bold text-2xl mt-1 mb-1">{{team.name}}</p>
+
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-adminTeamTableColor">
+                            <th class="text-left pl-4">
+                                <p>Name</p>
+                            </th>
+                             <th class="text-right pr-4">
+                                <p>Solves</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in team.get_members() %}
+                        <tr class="odd:bg-adminTeamTableContentDark even:bg-adminTeamTableContentLight">
+                            <td class="text-left pl-4">
+                                <p>{{ member.username }}</p>
+                            </td>
+                            <td class="text-right pr-9">
+                                <p>1</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+
+
+
+
             {% else %}
                 <div>
                     <p class="text-center font-bold text-2xl">Erstelle ein Team</p>
-                    <form action="" method="post">
-                        <input type="text" name="new_teamname" placeholder="Teamname" value="{{request.form.username}}">
-                        <input type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
-                        <input class="btn btn-default" type="submit">
+                    <form action="" method="post" class="grid grid-cols-3 items-center gap-2">
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" name="new_teamname" placeholder="Teamname" value="{{request.form.username}}">
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
+                        <input class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">
                     </form>
                 </div>
 
                 <div>
                     <p class="text-center font-bold text-2xl">Trete einem Team bei</p>
-                    <form action="" method="post">
-                        <input type="text" name="teamname" placeholder="Teamname" value="{{request.form.username}}">
-                        <input type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
-                        <input class="btn btn-default" type="submit">
+                    <form action="" method="post" class="grid grid-cols-3 items-center gap-2">
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" type="text" name="teamname" placeholder="Teamname" value="{{request.form.username}}">
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
+                        <input class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">
                     </form>
                 </div>
             {% endif %}
-                <div>
-                    <p class="text-center font-bold text-2xl">Leaderboard</p>
-                    {% for team in teams %}
-                    <p>{{team.name}} has a score of {{team.get_score()}}</p>
-                    {% endfor %}
-                </div>
+                <p class="text-center font-bold text-2xl mt-1 mb-1">Leaderboard</p>
+                <table class="w-full text-md text-center">
+                    <thead class="text-lg uppercase bg-adminTeamTableColor h-12 shadow-2xl rtl:text-right text-gray-500">
+                        <tr>
+                            <th scope="col">
+                                Team name
+                            </th>
+                            <th scope="col">
+                                Score
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody class="">
+                        {% for team in teams %}
+                        <tr class="odd:bg-adminTeamTableContentDark even:bg-adminTeamTableContentLight">
+                            <th scope="col">
+                                {{ team.name }}
+                            </th>
+                            <th scope="col">
+                                {{ team.get_score() }}
+                            </th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+
+
         </div> <!--hier endet divide-y-->
     </div>
 </div>

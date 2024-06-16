@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import render_template, redirect, Blueprint, request, send_from_directory, current_app
+from flask import render_template, redirect, Blueprint, request, send_from_directory, current_app, flash
 from flask_login import login_required
 from flask_login import current_user
 from . import auth
@@ -55,7 +55,6 @@ def test_contest():
             auth.create_team()
         else:
             auth.join_team()
-
     return render_template("/test_contest/test_contest_index.html",
                            user=current_user,
                            team=current_user.get_team("test_contest"),

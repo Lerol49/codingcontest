@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, flash
 from flask_login import logout_user, login_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -23,6 +23,7 @@ def login():
                 login_user(user, remember=form.remember.data)
                 return redirect("home")
             return '<h1>Invalid username or password</h1>'
+
         return "<h1>Invalid username or password</h1>"
     return render_template('login.html', form=form)
 
@@ -67,6 +68,11 @@ def join_team():
     if team is not None and check_password_hash(team.password, form.password.data):
         if len(team.get_members()) < contest_data["contests"][contest_id]["team_size"]:
             team.add_member(current_user)
+            flash("successfully joined team")
+        else:
+            flash("the team is full", "error")
+    else:
+        flash("team doesn't exists or password is wrong", "error")
 
 
 

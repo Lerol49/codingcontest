@@ -36,17 +36,6 @@ def page_0():
     return redirect(request.url + "home")
 
 
-@views.route("/home")
-def home():
-    return render_template("/home.html", user=current_user)
-
-@login_required
-@views.route("/profile")
-def profile():
-    return render_template("/profile.html", user=current_user)
-
-
-
 @views.route("/test_contest", methods=["POST", "GET"])
 @login_required
 def test_contest():
@@ -60,6 +49,17 @@ def test_contest():
                            team=current_user.get_team("test_contest"),
                            problems=contest_data["contests"]["test_contest"]["problems"],
                            teams=sort_teams_score("test_contest"))
+
+
+
+@views.route("/home")
+def home():
+    return render_template("/home.html", user=current_user)
+
+@views.route("/profile")
+@login_required
+def profile():
+    return render_template("/profile.html", user=current_user, contests=contest_data["contests"])
 
 
 @views.route("/<contest_name>/<problem>", methods=["POST", "GET"])

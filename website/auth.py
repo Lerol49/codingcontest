@@ -21,10 +21,11 @@ def login():
         if user:
             if check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
+                flash("successfully logged in!")
                 return redirect("home")
-            return '<h1>Invalid username or password</h1>'
 
-        return "<h1>Invalid username or password</h1>"
+
+        flash("Invalid username or password")
     return render_template('login.html', form=form)
 
 
@@ -56,8 +57,9 @@ def create_team():
     password = generate_password_hash(form.password.data)
     if Team.query.filter_by(name=form.new_teamname.data, contest_id=contest_id).first() is None:
         models.create_new_team(current_user, form.new_teamname.data, "test_contest", password)
+        flash("you successfully created the team " + str(form.new_teamname.data) + "!")
     else:
-        print("hi")
+        flash("this teamname already exists!", "error")
         return False # irgendwie eine Fehlermeldung displayen
 
 
@@ -79,6 +81,7 @@ def join_team():
 @auth.route("/logout")
 def logout():
     logout_user()
+    flash("successfully logged out!")
     return redirect("home")
 
 

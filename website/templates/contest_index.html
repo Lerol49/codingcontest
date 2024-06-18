@@ -4,7 +4,7 @@
 {% block body %}
 <div class="grid grid-cols-2 gap-3 mt-3">
     <div class="bg-contestLeft shadow-xl ml-3 rounded-2xl">
-        <p class="text-white text-center font-bold text-2xl mt-2 mb-1">Test-Contest</p>
+        <p class="text-white text-center font-bold text-2xl mt-2 mb-1">{{contest_name}}</p>
         <table class="w-full">
             <thead class="bg-contestLeftTableHead text-lg uppercase h-12 rtl:text-right text-white">
                 <tr>
@@ -26,7 +26,7 @@
                 {% for problem in problems.keys() %}
                     <tr class="odd:bg-contestLeftTableOdd even:bg-contestLeftTableEven">
                         <td class="text-left pl-4">
-                            <a href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
+                            <a href="{{contest_id}}/{{ problem }}">{{ problems[problem]["name"] }}</a>
                         </td>
                         <td class="text-center">
                             <p>{{contest_stats[problem][0]}}</p>
@@ -43,14 +43,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
-
-
-
-
-
-
-
     </div>
 
 

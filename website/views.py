@@ -6,10 +6,10 @@ from . import auth
 from .models import get_teams, get_contest
 from .leaderboard import sort_teams_score
 from . import form
-
-
-
 from . import contest_data
+import markdown
+from .models import Contest, init_Contests
+
 from .contest.contest_handling import handle_task_submission
 
 views = Blueprint("views", __name__)
@@ -36,32 +36,54 @@ def admin_required(func):
 def page_0():
     return redirect(request.url + "home")
 
+@views.route("/home")
+def home():
+    return render_template("/home.html", user=current_user)
 
-@views.route("/test_contest", methods=["POST", "GET"])
+
+
+# @views.route("/test_contest", methods=["POST", "GET"])
+# @login_required
+# def test_contest():
+#     if request.method == "POST":
+#         if "new_teamname" in request.form:
+#             auth.create_team()
+#         else:
+#             auth.join_team()
+#
+#     return render_template("/test_contest/test_contest_index.html",
+#                            user=current_user,
+#                            team=current_user.get_team("test_contest"),
+#                            problems=contest_data["contests"]["test_contest"]["problems"],
+#                            teams=sort_teams_score("test_contest"))
+
+
+@views.route("/contest/<contest_id>", methods=["POST", "GET"])
 @login_required
-def test_contest():
-    from .models import init_Contests
-    init_Contests()
+def contest_index(contest_id):
+    if Contest.query.filter_by(contest_id=contest_id).first() is None:
+        init_Contests()
+
     if request.method == "POST":
         if "new_teamname" in request.form:
-            auth.create_team()
+            auth.create_team(contest_id)
         else:
             auth.join_team()
-    return render_template("/test_contest/test_contest_index.html",
+
+    return render_template("/contest_index.html",
                            user=current_user,
-                           team=current_user.get_team("test_contest"),
-                           contest_id="test_contest",
-                           problems=contest_data["contests"]["test_contest"]["problems"],
-                           teams=sort_teams_score("test_contest"),
-                           contest_stats=get_contest("test_contest").stats,
+                           team=current_user.get_team(contest_id),
+                           contest_id=contest_id,
+                           contest_name=contest_data["contests"][contest_id]["name"],
+                           problems=contest_data["contests"][contest_id]["problems"],
+                           teams=sort_teams_score(contest_id),
+                           contest_stats=get_contest(contest_id).stats,
                            create_form=form.CreateTeam(),
                            join_form=form.JoinTeam())
 
 
 
-@views.route("/home")
-def home():
-    return render_template("/home.html", user=current_user)
+
 
 @views.route("/profile")
 @login_required
@@ -69,19 +91,30 @@ def profile():
     return render_template("/profile.html", user=current_user, contests=contest_data["contests"])
 
 
-@views.route("/<contest_name>/<problem>", methods=["POST", "GET"])
+
+
+@views.route("contest/<contest_id>/<problem_id>", methods=["POST", "GET"])
 @login_required
-def load_contest_problem(contest_name, problem):
-    if contest_data["contests"].get(contest_name) is None:
+def load_contest_problem(contest_id, problem_id):
+    if contest_data["contests"].get(contest_id) is None:
         return "no"
-    if contest_data["contests"][contest_name]["problems"].get(problem) is None:
+    print(problem_id)
+    if contest_data["contests"][contest_id]["problems"].get(problem_id.replace(".md", "")) is None:
         return "nein"
 
-    result = handle_task_submission(contest_name, problem, "solutions/" + problem + "/output.txt")
-    return render_template("/" + contest_name + "/" + problem + ".html", result=result, user=current_user)
+    result = handle_task_submission(contest_id, problem_id, "solutions/" + problem_id + "/output.txt")
+
+    with open("website/templates/" + contest_id + "/" + problem_id + ".md", "r") as problem_file:
+        markdown_text = problem_file.read()
+
+    # add nl2br for immediante line breaks
+    markdown_html = markdown.markdown(markdown_text, extensions=["fenced_code", "tables", "md_in_html"])
+
+    return render_template("/base_problem_md.html", problem_id=problem_id, problem_content=markdown_html,
+                           result=result, user=current_user)
 
 
-@views.route("input_files/<problem>")
+@views.route("/contest/input_files/<problem>")
 def send_input_file(problem):
     return send_from_directory("../solutions/" + problem + "/", "input.txt")
 

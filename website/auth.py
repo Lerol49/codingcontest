@@ -42,16 +42,15 @@ def signup():
                 hashed_password = generate_password_hash(form.password.data)
 
                 new_user = models.create_new_user(username=form.username.data, password=hashed_password)
-                new_user.give_access_to_contest("test_contest")
+                new_user.give_access_to_contest("the_beginning")
 
                 return redirect("/home")
 
     return render_template("signup.html", form=form)
 
 
-def create_team():
-    contest_id = "test_contest"
-    if current_user.get_team("test_contest") is not None:
+def create_team(contest_id):
+    if current_user.get_team(contest_id) is not None:
         flash("DU HURENSOHN")
         return
     form = CreateTeam()
@@ -67,8 +66,7 @@ def create_team():
                 flash("team_creation_error: team already exists", "error")
 
 
-def join_team():
-    contest_id = "test_contest"
+def join_team(contest_id):
     form = JoinTeam()
     if form.is_submitted():
         if not form.validate():

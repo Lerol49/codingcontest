@@ -91,9 +91,10 @@ class Team(db.Model):
 
 
     def add_member(self, user):
-        self.members["names"].append(user.username)
-        self._commit("members")
-        user._join_team(self.contest_id, self.name)
+        if user.get_team(self.contest_id) is None:
+            self.members["names"].append(user.username)
+            self._commit("members")
+            user._join_team(self.contest_id, self.name)
 
     def increment_tries_counter(self, problem_id):
         self.stats[problem_id][1] += 1

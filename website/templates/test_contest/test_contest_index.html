@@ -29,13 +29,15 @@
                             <a href="test_contest/{{ problem }}">{{ problems[problem]["name"] }}</a>
                         </td>
                         <td class="text-center">
-                            <p>2</p>
+                            <p>{{contest_stats[problem][0]}}</p>
                         </td>
                         <td class="text-center">
-                            <p>453</p>
+                            <p>{{contest_stats[problem][1]}}</p>
                         </td>
                         <td class="text-center">
-                            <p>y</p>
+                            {% if team is not none %}
+                            <p>{{team.get_problem_status(problem)}}</p>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -79,7 +81,7 @@
                                 <p>{{ member.username }}</p>
                             </td>
                             <td class="text-right pr-9">
-                                <p>1</p>
+                                <p>{{member.count_solves(contest_id)}}</p>
                             </td>
                         </tr>
                         {% endfor %}

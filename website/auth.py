@@ -37,7 +37,7 @@ def signup():
         hashed_password = generate_password_hash(form.password.data)
 
         new_user = models.create_new_user(username=form.username.data, password=hashed_password)
-        new_user.give_access_to_contest("test_contest")
+        new_user.give_access_to_contest("the_beginning")
 
         # if new_user.username == "max":
         #     create_new_team(new_user, "team1", "test_contest", "aaaa")
@@ -49,20 +49,18 @@ def signup():
     return render_template("signup.html", form=form)
 
 
-def create_team():
-    contest_id = "test_contest"
+def create_team(contest_id):
     form = CreateTeam()
     password = generate_password_hash(form.password.data)
     if Team.query.filter_by(name=form.new_teamname.data, contest_id=contest_id).first() is None:
-        models.create_new_team(current_user, form.new_teamname.data, "test_contest", password)
+        models.create_new_team(current_user, form.new_teamname.data, contest_id, password)
     else:
         print("hi")
-        return False # irgendwie eine Fehlermeldung displayen
+        return False  # irgendwie eine Fehlermeldung displayen
 
 
-def join_team():
+def join_team(contest_id):
     form = JoinTeam()
-    contest_id = "test_contest"
     team = Team.query.filter_by(name=form.teamname.data, contest_id=contest_id).first()
     if team is not None and check_password_hash(team.password, form.password.data):
         if len(team.get_members()) < contest_data["contests"][contest_id]["team_size"]:

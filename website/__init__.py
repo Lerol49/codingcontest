@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 import secrets
 import json
+from flask_misaka import Misaka  # this is for markdown support
 
 db = SQLAlchemy()
 with (open("website/contest/contest.json", "r")) as contest:
@@ -27,6 +28,8 @@ def create_app():
     from .auth import auth
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+
+    Misaka(app)
 
     from .models import User
 

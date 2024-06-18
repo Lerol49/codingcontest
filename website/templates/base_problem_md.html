@@ -1,0 +1,21 @@
+{% extends "base_menu.html" %}
+
+
+
+
+
+{% block body %}
+    {% block body2 %}{% endblock %}
+
+    {{problem_content|markdown}}
+
+    <a href="../input_files/{{problem_id}}" download>input</a>
+
+    <div id="submit">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file"/>
+            <input type="submit"/>
+        </form>
+        <div id=answer_feedback>{{result}}</div>
+    </div>
+{% endblock %}

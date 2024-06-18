@@ -51,6 +51,9 @@ def signup():
 
 def create_team():
     contest_id = "test_contest"
+    if current_user.get_team("test_contest") is not None:
+        flash("DU HURENSOHN")
+        return
     form = CreateTeam()
     if form.is_submitted():
         if not form.validate():
@@ -59,6 +62,7 @@ def create_team():
             password = generate_password_hash(form.new_password.data)
             if Team.query.filter_by(name=form.new_teamname.data, contest_id=contest_id).first() is None:
                 models.create_new_team(current_user, form.new_teamname.data, contest_id, password)
+                flash("you successfully created the team " + form.new_teamname.data + "!")
             else:
                 flash("team_creation_error: team already exists", "error")
 

@@ -67,6 +67,14 @@ class User(UserMixin, db.Model):
         team = Team.query.filter((Team.name == self.contest_data[contest_id]) & (Team.contest_id == contest_id)).first()
         return team
 
+    def count_solves(self, contest_id):
+        from . import contest_data
+        count = 0
+        for problem_name in contest_data["contests"][contest_id]["problems"]:
+            if self.get_problem_status(problem_name):
+                count += 1
+        return count
+
 
 
 class Team(db.Model):
@@ -118,14 +126,34 @@ class Team(db.Model):
         self._commit("stats")
 
 
+class Contest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    contest_id = db.Column(db.String())
+    stats = db.Column(db.JSON, default={})
 
 
+    def update_stats(self, stats_dict):
+        self.stats = stats_dict
+        attributes.flag_modified(self, "stats")
+        db.session.commit()
+
+
+
+def get_contest(contest_id):
+    return Contest.query.filter_by(contest_id=contest_id).first()
 
 def get_teams(contest_id):
     return Team.query.filter_by(contest_id=contest_id).all()
 
-
-
+def init_Contests():
+    from . import contest_data
+    contests = contest_data["contests"]
+    for contest_name in contests:
+        contest = Contest(contest_id=contest_name)
+        db.session.add(contest)
+        db.session.commit()
+        from .leaderboard import eval_score
+        eval_score(contest_name)
 
 def create_new_team(creator, team_name, contest_id, hashed_password):
     """creates, returnes and saves new Team Object.
@@ -154,11 +182,6 @@ def create_new_user(username, password):
     return new_user
 
 
-
-
-
-
-# TODO: warum wird der score nicht größer als null
 
 
 

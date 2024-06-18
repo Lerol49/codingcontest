@@ -3,8 +3,9 @@ from flask import render_template, redirect, Blueprint, request, send_from_direc
 from flask_login import login_required
 from flask_login import current_user
 from . import auth
-from .models import get_teams
+from .models import get_teams, get_contest
 from .leaderboard import sort_teams_score
+from . import form
 
 
 
@@ -39,6 +40,8 @@ def page_0():
 @views.route("/test_contest", methods=["POST", "GET"])
 @login_required
 def test_contest():
+    from .models import init_Contests
+    init_Contests()
     if request.method == "POST":
         if "new_teamname" in request.form:
             auth.create_team()
@@ -47,8 +50,12 @@ def test_contest():
     return render_template("/test_contest/test_contest_index.html",
                            user=current_user,
                            team=current_user.get_team("test_contest"),
+                           contest_id="test_contest",
                            problems=contest_data["contests"]["test_contest"]["problems"],
-                           teams=sort_teams_score("test_contest"))
+                           teams=sort_teams_score("test_contest"),
+                           contest_stats=get_contest("test_contest").stats,
+                           create_form=form.CreateTeam(),
+                           join_form=form.JoinTeam())
 
 
 
@@ -92,7 +99,8 @@ def load_admin_contest(contest):
     if contest_data["contests"].get(contest) is None:
         return "no"
     return render_template("/admin_contest_config.html", user=current_user,
-                           problems=contest_data["contests"][contest]["problems"], teams=get_teams(contest))
+                           problems=contest_data["contests"][contest]["problems"],
+                           teams=get_teams(contest))
 
 
 

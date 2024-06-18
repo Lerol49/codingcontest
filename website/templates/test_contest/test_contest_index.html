@@ -95,8 +95,9 @@
                 <div>
                     <p class="text-center font-bold text-2xl">Erstelle ein Team</p>
                     <form action="" method="post" class="grid grid-cols-3 items-center gap-2">
-                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" name="new_teamname" placeholder="Teamname" value="{{request.form.username}}">
-                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
+                        {{ create_form.hidden_tag() }}
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" type="text" name="new_teamname" placeholder="Teamname", value="{{request.form.new_teamname}}">
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="new_password" placeholder="Passwort", value="">
                         <input class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">
                     </form>
                 </div>
@@ -104,8 +105,9 @@
                 <div>
                     <p class="text-center font-bold text-2xl">Trete einem Team bei</p>
                     <form action="" method="post" class="grid grid-cols-3 items-center gap-2">
-                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" type="text" name="teamname" placeholder="Teamname" value="{{request.form.username}}">
-                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="password" placeholder="Passwort" value="{{request.form.username}}">
+                        {{ join_form.hidden_tag() }}
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" type="text" name="teamname" placeholder="Teamname" value="{{request.form.teamname}}">
+                        <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="password" placeholder="Passwort" value="">
                         <input class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">
                     </form>
                 </div>

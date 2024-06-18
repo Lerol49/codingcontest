@@ -5,6 +5,7 @@ from flask_login import current_user
 from . import auth
 from .models import get_teams
 from .leaderboard import sort_teams_score
+from . import form
 
 
 
@@ -59,7 +60,9 @@ def test_contest():
                            user=current_user,
                            team=current_user.get_team("test_contest"),
                            problems=contest_data["contests"]["test_contest"]["problems"],
-                           teams=sort_teams_score("test_contest"))
+                           teams=sort_teams_score("test_contest"),
+                           create_form=form.CreateTeam(),
+                           join_form=form.JoinTeam())
 
 
 @views.route("/<contest_name>/<problem>", methods=["POST", "GET"])
@@ -92,7 +95,8 @@ def load_admin_contest(contest):
     if contest_data["contests"].get(contest) is None:
         return "no"
     return render_template("/admin_contest_config.html", user=current_user,
-                           problems=contest_data["contests"][contest]["problems"], teams=get_teams(contest))
+                           problems=contest_data["contests"][contest]["problems"],
+                           teams=get_teams(contest))
 
 
 

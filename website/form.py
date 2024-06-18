@@ -16,7 +16,7 @@ class RegistrationForm(FlaskForm):
 
 class CreateTeam(FlaskForm):
     new_teamname = StringField("Teamname", validators=[InputRequired(), Length(min=3, max=30)])
-    password = PasswordField("Passwort", validators=[InputRequired(), Length(min=3, max=30)])
+    new_password = PasswordField("Passwort", validators=[InputRequired(), Length(min=3, max=30)])
 
 class JoinTeam(FlaskForm):
     teamname = StringField("Teamname", validators=[InputRequired(), Length(min=3, max=30)])

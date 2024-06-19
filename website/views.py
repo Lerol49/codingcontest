@@ -110,8 +110,12 @@ def load_contest_problem(contest_id, problem_id):
     # add nl2br for immediante line breaks
     markdown_html = markdown.markdown(markdown_text, extensions=["fenced_code", "tables", "md_in_html"])
 
+    submission_type = contest_data["contests"][contest_id]["problems"][problem_id]["submission_type"]
+    print(submission_type)
+
     return render_template("/base_problem_md.html", problem_id=problem_id, problem_content=markdown_html,
-                           result=result, user=current_user)
+                           result=result, user=current_user, submission_type=submission_type,
+                           number_submission_form=form.NumberSumbission())
 
 
 @views.route("/contest/input_files/<problem>")

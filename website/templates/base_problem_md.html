@@ -9,6 +9,9 @@
 
     {{problem_content|markdown}}
 
+    <br>
+    <br>
+    {% if submission_type == "file" %}
     <a href="../input_files/{{problem_id}}" download>input</a>
 
     <div id="submit">
@@ -18,4 +21,13 @@
         </form>
         <div id=answer_feedback>{{result}}</div>
     </div>
+    {% elif submission_type == "number" %}
+        <form action="" method="post">
+            {{ number_submission_form.hidden_tag() }}
+            <input type="text" name="submission_number" placeholder="Deine Antwort">
+            <input type="submit">
+        </form>
+
+    {% endif %}
+
 {% endblock %}

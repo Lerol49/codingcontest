@@ -21,3 +21,7 @@ class CreateTeam(FlaskForm):
 class JoinTeam(FlaskForm):
     teamname = StringField("Teamname", validators=[InputRequired(), Length(min=3, max=30)])
     password = PasswordField("Passwort", validators=[InputRequired(), Length(min=3, max=30)])
+
+
+class NumberSumbission(FlaskForm):
+    sumbission_number = StringField("Sumbission", validators=[InputRequired()])

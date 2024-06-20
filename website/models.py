@@ -147,6 +147,7 @@ def get_teams(contest_id):
 
 def init_Contests():
     from . import contest_data
+    Contest.query.delete()
     contests = contest_data["contests"]
     for contest_name in contests:
         contest = Contest(contest_id=contest_name)

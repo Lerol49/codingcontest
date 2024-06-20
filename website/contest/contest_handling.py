@@ -4,7 +4,7 @@ from website.models import User
 
 from website.contest.compare_output_file import compare_output_file, compare_output_number
 from website.leaderboard import eval_score
-from website.form import NumberSumbission
+from website.form import NumberSubmission
 
 
 def handle_task_submission(contest_name, problem_name, control_filename):
@@ -23,7 +23,7 @@ def handle_task_submission(contest_name, problem_name, control_filename):
                 _add_try(user, team, problem_name, submission_result)
 
         elif "submission_number" in request.form:
-            form = NumberSumbission()
+            form = NumberSubmission()
             if form.validate_on_submit():
                 submission_result = compare_output_number(form.submission_number.data, control_filename)
                 _add_try(user, team, problem_name, submission_result)

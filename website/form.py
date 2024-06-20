@@ -24,4 +24,4 @@ class JoinTeam(FlaskForm):
 
 
 class NumberSumbission(FlaskForm):
-    sumbission_number = StringField("Sumbission", validators=[InputRequired()])
+    submission_number = StringField("Sumbission", validators=[InputRequired()])

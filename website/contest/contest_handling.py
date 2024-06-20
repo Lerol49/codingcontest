@@ -1,44 +1,52 @@
-from flask import request
+from flask import request, flash
 from flask_login import current_user
 from website.models import User
 
-from website.contest.compare_output_file import compare_output_file
+from website.contest.compare_output_file import compare_output_file, compare_output_number
 from website.leaderboard import eval_score
+from website.form import NumberSumbission
 
 
 def handle_task_submission(contest_name, problem_name, control_filename):
     user = User.query.filter_by(username=current_user.username).first()
     team = user.get_team(contest_name)
 
-    output_to_html = ""
 
 
     # handles upload try
     if request.method == "POST":
-        submit_file = request.files["file"]
-        if submit_file:
-            submission_result = compare_output_file(submit_file, control_filename)
-            _add_try(user, team, problem_name, submission_result)
-            eval_score(contest_name)
+        submission_result = False
+        if request.files.get("file") is not None:
+            submit_file = request.files["file"]
+            if submit_file:
+                submission_result = compare_output_file(submit_file, control_filename)
+                _add_try(user, team, problem_name, submission_result)
 
-            if submission_result:
-                output_to_html = "richtig!"
-            else:
-                output_to_html = "falsch!"
+        elif "submission_number" in request.form:
+            form = NumberSumbission()
+            if form.validate_on_submit():
+                submission_result = compare_output_number(form.submission_number.data, control_filename)
+                _add_try(user, team, problem_name, submission_result)
+
+        eval_score(contest_name)
+
+        if submission_result:
+            flash("Richtig!")
+        else:
+            flash("Falsch!", "error")
 
 
 
     # display previous result
     else:
         if not has_previous_submission(user, team, problem_name):
-            output_to_html = ""
+            pass
         elif get_previous_result(user, team, problem_name):
-            output_to_html = "richtig"
+            flash("Das Problem wurde bereits gelöst")
         else:
-            output_to_html = "falsch"
+            pass
 
 
-    return output_to_html
 
 
 def _add_try(user, team, problem_name, submission_result):

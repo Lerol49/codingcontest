@@ -12,7 +12,7 @@ def eval_score(contest_id):
 
     for problem in problems:
         solved_count = 0
-        problem_max_points = problems[problem]["points"]
+        problem_max_points = int(problems[problem]["points"])
         # count how many teams have solved a problem
         for team in teams:
 

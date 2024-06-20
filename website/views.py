@@ -60,8 +60,6 @@ def home():
 @views.route("/contest/<contest_id>", methods=["POST", "GET"])
 @login_required
 def contest_index(contest_id):
-    if Contest.query.filter_by(contest_id=contest_id).first() is None:
-        init_Contests()
 
     if request.method == "POST":
         if "new_teamname" in request.form:
@@ -97,11 +95,11 @@ def profile():
 def load_contest_problem(contest_id, problem_id):
     if contest_data["contests"].get(contest_id) is None:
         return "no"
-    print(problem_id)
+
     if contest_data["contests"][contest_id]["problems"].get(problem_id.replace(".md", "")) is None:
         return "nein"
 
-    result = handle_task_submission(contest_id, problem_id, "solutions/" + problem_id + "/output.txt")
+    handle_task_submission(contest_id, problem_id, "solutions/" + problem_id + "/output.txt")
 
     with open("website/templates/" + contest_id + "/" + problem_id + ".md", "r") as problem_file:
         markdown_text = problem_file.read()
@@ -110,10 +108,9 @@ def load_contest_problem(contest_id, problem_id):
     #markdown_html = markdown.markdown(markdown_text, extensions=["fenced_code", "tables", "md_in_html", 'attr_list'])
 
     submission_type = contest_data["contests"][contest_id]["problems"][problem_id]["submission_type"]
-    print(submission_type)
 
     return render_template("/base_problem_md.html", problem_id=problem_id, problem_content=markdown_text,
-                           result=result, user=current_user, submission_type=submission_type,
+                           user=current_user, submission_type=submission_type,
                            number_submission_form=form.NumberSumbission())
 
 

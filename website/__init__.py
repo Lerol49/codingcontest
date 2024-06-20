@@ -43,5 +43,8 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        from .models import init_Contests
+        init_Contests()
+
 
     return app

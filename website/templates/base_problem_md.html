@@ -6,8 +6,15 @@
 
 {% block body %}
     {% block body2 %}{% endblock %}
+    <link rel="stylesheet" href="/static/css/problem.css">
 
-    {{problem_content|markdown}}
+    <div class="flex justify-center items-center">
+        <div class="text-white mt-2 ml-2 w-[50%] flex-col">
+            {{problem_content|markdown}}
+        </div>
+
+    </div>
+
 
     <br>
     <br>

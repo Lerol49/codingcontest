@@ -21,16 +21,14 @@ Gib alle Stockwerke, die du besucht hast in der richtigen Reihenfolge aus.
 
 
 Beispiel (Die Bemerkungen rechts werden nicht mit übergeben):
-### Input
+### Inputs
 ```
-
 4       # Erdgeschoss
 5       # Anzahl an Stockwerken
 0       # 1. Stock
 2       # 2. Stock
 1       # 3. Stock
 3       # 4. Stock
-
 ```
 ### Output
 ```

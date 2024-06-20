@@ -65,7 +65,7 @@ def contest_index(contest_id):
         if "new_teamname" in request.form:
             auth.create_team(contest_id)
         else:
-            auth.join_team()
+            auth.join_team(contest_id)
 
     return render_template("/contest_index.html",
                            user=current_user,
@@ -111,7 +111,7 @@ def load_contest_problem(contest_id, problem_id):
 
     return render_template("/base_problem_md.html", problem_id=problem_id, problem_content=markdown_text,
                            user=current_user, submission_type=submission_type,
-                           number_submission_form=form.NumberSumbission())
+                           number_submission_form=form.NumberSubmission())
 
 
 @views.route("/contest/input_files/<problem>")

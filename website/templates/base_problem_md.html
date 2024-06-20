@@ -19,21 +19,32 @@
     <br>
     <br>
     {% if submission_type == "file" %}
-    <a href="../input_files/{{problem_id}}" download>input</a>
 
-    <div id="submit">
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-        </form>
+    <div class="flex flex-col items-center">
+        <div class="mt-5 bg-adminColor hover:bg-adminColorHover text-center rounded-2xl shadow-2xl font-semibold py-3 px-2">
+            <a href="../input_files/{{problem_id}}" download>Download input file</a>
+        </div>
+
+
+        <div id="submit" class="">
+            <form method="post" enctype="multipart/form-data" class="flex flex-col items-center">
+                <input type="file" name="file" class="bg-adminTeamTableColor text-center rounded py-1 border-2 border-gray-500 shadow-2xl mt-5 px-2"/>
+                <input type="submit" class="mt-5 bg-adminColor hover:bg-adminColorHover w-[50%] text-center rounded-2xl shadow-2xl font-semibold py-3"/>
+            </form>
+        </div>
     </div>
+
     {% elif submission_type == "number" %}
-        <form action="" method="post">
+        <form action="" method="post" class="flex flex-col items-center">
             {{ number_submission_form.hidden_tag() }}
-            <input type="text" name="submission_number" placeholder="Deine Antwort">
-            <input type="submit">
+            <input type="text" name="submission_number" placeholder="Deine Antwort" class="w-40 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
+            <div class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
+                <input type="submit" class="">
+            </div>
+
         </form>
 
     {% endif %}
 
+    <div class="pb-44"></div>
 {% endblock %}

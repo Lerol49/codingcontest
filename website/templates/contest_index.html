@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 {% for problem in problems.keys() %}
-                    <tr class="odd:bg-contestLeftTableOdd even:bg-contestLeftTableEven">
+                    <tr class="odd:bg-contestLeftTableOdd even:bg-contestLeftTableEven text-gray-100 text-lg">
                         <td class="text-left pl-4">
                             <a href="{{contest_id}}/{{ problem }}">{{ problems[problem]["name"] }}</a>
                         </td>

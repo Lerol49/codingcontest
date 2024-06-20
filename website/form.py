@@ -23,5 +23,5 @@ class JoinTeam(FlaskForm):
     password = PasswordField("Passwort", validators=[InputRequired(), Length(min=3, max=30)])
 
 
-class NumberSumbission(FlaskForm):
+class NumberSubmission(FlaskForm):
     submission_number = StringField("Sumbission", validators=[InputRequired()])

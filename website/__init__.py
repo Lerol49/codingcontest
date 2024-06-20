@@ -43,8 +43,10 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-        from .models import init_Contests
+        from .models import init_Contests, update_stats_on_new_problem
+        update_stats_on_new_problem()
         init_Contests()
+
 
 
     return app

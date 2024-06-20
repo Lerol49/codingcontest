@@ -112,6 +112,9 @@ class Team(db.Model):
         self.stats[problem_name][0] = result
         self._commit("stats")
 
+    def give_access_to_problem(self, problem_name):
+        self.stats[problem_name] = [False, 0]
+
     def get_tries_count(self, problem_name) -> int:
         return self.stats[problem_name][1]
 
@@ -155,6 +158,25 @@ def init_Contests():
         db.session.commit()
         from .leaderboard import eval_score
         eval_score(contest_name)
+
+
+def update_stats_on_new_problem():
+    from . import contest_data
+    for contest in contest_data["contests"]:
+        for problem_id in contest_data["contests"][contest]["problems"]:
+            # users_in_need = User.query.filter(User.stats[problem_id] is None).all()
+            # teams_in_need = Team.query.filter(Team.stats[problem_id] is None).all()
+            for user in User.query.all():
+                if user.stats.get(problem_id) is None:
+                    user.give_access_to_problem(problem_id)
+                    user._commit_stats()
+            for team in Team.query.all():
+                if team.stats.get(problem_id) is None:
+                    team.give_access_to_problem(problem_id)
+                    team._commit("stats")
+
+
+
 
 def create_new_team(creator, team_name, contest_id, hashed_password):
     """creates, returnes and saves new Team Object.

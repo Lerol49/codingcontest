@@ -8,21 +8,23 @@
       "problems": {
           "pizza_distribution_problem":{
             "name": "Pizza Distribution Problem",
-            "difficulty": 2,
             "points": 500,
             "submission_type": "file"
           },
           "behoerdenrennen": {
             "name": "Behördenrennen",
-            "difficulty" : 1,
             "points": 420,
             "submission_type": "file"
           },
           "expedition_im_dschungel": {
               "name": "Expedition im Dschungel",
-              "difficuty": 2,
-              "points": "300",
+              "points": 300,
               "submission_type": "number"
+          },
+          "hoechste_gipfel_differenz": {
+              "name": "Höchste Gipfel Differenz",
+              "points": 300,
+              "sumbission_type": "file"
           }
 
       }

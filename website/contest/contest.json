@@ -24,7 +24,7 @@
           "hoechste_gipfel_differenz": {
               "name": "Höchste Gipfel Differenz",
               "points": 300,
-              "sumbission_type": "file"
+              "submission_type": "file"
           }
 
       }

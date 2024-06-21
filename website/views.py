@@ -104,8 +104,6 @@ def load_contest_problem(contest_id, problem_id):
     with open("website/templates/" + contest_id + "/" + problem_id + ".md", "r") as problem_file:
         markdown_text = problem_file.read()
 
-    # add nl2br for immediante line breaks
-    #markdown_html = markdown.markdown(markdown_text, extensions=["fenced_code", "tables", "md_in_html", 'attr_list'])
 
     submission_type = contest_data["contests"][contest_id]["problems"][problem_id]["submission_type"]
 

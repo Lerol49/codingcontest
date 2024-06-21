@@ -29,7 +29,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    Misaka(app)
+    Misaka(app, math_explicit=True, math=True)
 
     from .models import User
 

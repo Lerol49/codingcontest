@@ -4,7 +4,6 @@
 Wir betrachten eine Bergkette mit n Bergen. Ein Berg hat die Höhe b_i mit 1 <= i <= n.
 Gesucht ist der höchste Höhenunterschied zwischen zwei Bergen in der Bergkette.
 
-### Input
 Es wird zuerst eine Zahl a übergeben, die die Anzahl der kommenden Zeilen steht. 
 Die erste Zahl einer Zeile ist die Anzahl an Bergen in der Bergkette, die restlichen Zahlen sind
 die Höhen der Berge:
@@ -18,7 +17,7 @@ n_a b_a_1 b_a_2 b_a_3 ... b_a_n
 ```
 
 ### Beispiel
-Eingabe:
+#### Input
 
 ```
 2
@@ -26,7 +25,7 @@ Eingabe:
 6 1 1 1 5 3 5
 ```
 
-Ausgabe:
+#### Output
 ```
 3
 4

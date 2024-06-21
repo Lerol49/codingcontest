@@ -7,7 +7,7 @@ Wir möchten jetzt die Pizzen auf uns aufteilen. Dabei gelten folgende Regeln:
 - Alle Pizzen müssen in gleich viele Stücke geschnitten werden.
 - Wir versuchen möglichst große Stücke zu haben.
 
-In wie viele Teile müssen wir eine Pizza schneiden?
+In wie viele Stücke müssen wir die Pizzen jeweils schneiden?
 
 Übergeben wird dir eine erste Zahl *a* für die Anzahl an Zeilen danach und danach genau
 so viele Kombinationen von p_i und l_i:
@@ -21,9 +21,9 @@ p_a l_a
 ```
 
 
-Ausgeben sollst du nur die Ergebnisse deiner Berechnung.
 
-Das könnte dann zum Beispiel so aussehen:
+
+### Beispiel
 #### Input
 ```
 3

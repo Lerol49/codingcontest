@@ -13,27 +13,38 @@ ersten Stock versuchen...
 
 
 In der Input Datei steht in der ersten Zeile die Anzahl an Stockwerken n.
-Danach folgen alle Stockwerke von 0 (Erdgeschoss) bis n-1 mit einem Verweis auf
-ein anderes Stockwerk. Frage dich so lange durch, bis du in dem Stockwerk angekommen
+Danach folgen alle Stockwerke von 1 (Erdgeschoss) bis n mit einem Verweis auf
+ein anderes Stockwerk.
+
+```
+n
+s_1
+s_2
+...
+s_(n-1)
+```
+
+Frage dich so lange durch, bis du in dem Stockwerk angekommen
 bist, in dem der Verweis die Zahl 0 ist, da ist die Personalausweisbehörde. <br>
 Gib alle Stockwerke, die du besucht hast in der richtigen Reihenfolge aus.
 
 
 
-Beispiel (Die Bemerkungen rechts werden nicht mit übergeben):
-### Inputs
+### Beispiel
+#### Inputs
 ```
-4       # Erdgeschoss
-5       # Anzahl an Stockwerken
-0       # 1. Stock
-2       # 2. Stock
-1       # 3. Stock
-3       # 4. Stock
-```
-### Output
-```
-0
-3
-1
+5
 4
+0
+2
+5
+3
+```
+#### Output
+```
+4
+5
+3
+2
+0
 ```

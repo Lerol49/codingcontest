@@ -113,7 +113,8 @@ def load_contest_problem(contest_id, problem_id):
 
     return render_template("/base_problem_md.html", problem_id=problem_id, problem_content=markdown_text,
                            user=current_user, submission_type=submission_type,
-                           number_submission_form=form.NumberSubmission())
+                           number_submission_form=form.NumberSubmission(),
+                           contest_id=contest_id)
 
 
 

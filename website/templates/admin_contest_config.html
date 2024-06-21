@@ -15,7 +15,7 @@
 		<p>Participants</p>
 	</button>
 
-	<button class="bg-adminColor hover:bg-adminColorHover shadow-xl h-12 text-gray-100 text-lg font-semibold">
+	<button onclick="loadConfigPage()" class="bg-adminColor hover:bg-adminColorHover shadow-xl h-12 text-gray-100 text-lg font-semibold">
 		<p>Settings</p>
 	</button>
 </div>
@@ -80,6 +80,13 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
+
+
+<div id="config_field" class="hidden">
+
+
+
 </div>
 
 

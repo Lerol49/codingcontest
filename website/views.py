@@ -8,6 +8,7 @@ from .leaderboard import sort_teams_score
 from . import form
 from . import contest_data
 from .models import Contest, init_Contests
+from .other_requests import set_end_time
 
 from .contest.contest_handling import handle_task_submission
 
@@ -124,15 +125,19 @@ def load_admin_main():
     return render_template("/admin_main.html", contests=contest_data["contests"], user=current_user)
 
 
-@views.route("/admin/<contest>")
+@views.route("/admin/<contest>", methods=["POST", "GET"])
 @admin_required
 def load_admin_contest(contest):
     """loading admin config page for specific contest"""
     if contest_data["contests"].get(contest) is None:
         return "no"
+
+    set_end_time(contest)
+
     return render_template("/admin_contest_config.html", user=current_user,
                            problems=contest_data["contests"][contest]["problems"],
-                           teams=get_teams(contest))
+                           teams=get_teams(contest),
+                           set_end_time_form=form.SetEndTime())
 
 
 

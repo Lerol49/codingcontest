@@ -144,11 +144,11 @@ class Contest(db.Model):
 
     def set_end_time(self, new_time):
         self.end_time = new_time
-        db.commit()
+        db.session.commit()
 
     def set_running(self, value):
         self.running = value
-        db.commit()
+        db.session.commit()
 
     def get_running(self):
         return self.running

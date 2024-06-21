@@ -114,10 +114,6 @@ def load_contest_problem(contest_id, problem_id):
                            number_submission_form=form.NumberSubmission())
 
 
-@views.route("/contest/input_files/<problem>")
-def send_input_file(problem):
-    return send_from_directory("../solutions/" + problem + "/", "input.txt")
-
 
 @views.route("/admin")
 @admin_required

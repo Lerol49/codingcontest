@@ -23,7 +23,7 @@ def solve():
         text = f.readlines()
 
     output = ""
-    for i in range(1, int(text[0])):
+    for i in range(1, int(text[0]) + 1):
         line = text[i].split(" ")
         max_dist = 0
         for j in range(1, int(line[0])):
@@ -37,5 +37,5 @@ def solve():
         f.write(output)
 
 
-create_input_file()
-solve()
+# create_input_file()
+# solve()

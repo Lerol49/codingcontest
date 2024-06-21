@@ -1,6 +1,6 @@
 ## Pizza Distribution Problem
 
-Angenommen wir haben *n* Pizzen und *m* Leute mit *n* &leq; *m*.
+Angenommen wir haben *p* Pizzen und *l* Leute mit *p* &leq; *l*.
 
 Wir möchten jetzt die Pizzen auf uns aufteilen. Dabei gelten folgende Regeln:
 
@@ -9,14 +9,15 @@ Wir möchten jetzt die Pizzen auf uns aufteilen. Dabei gelten folgende Regeln:
 
 In wie viele Teile müssen wir eine Pizza schneiden?
 
-Übergeben wird dir eine erste Zahl für die Anzahl an Zeilen danach und danach genau
-so viele Kombinationen von n und m:
+Übergeben wird dir eine erste Zahl *a* für die Anzahl an Zeilen danach und danach genau
+so viele Kombinationen von p_i und l_i:
 
 ```
 a
-n m
-n m 
+p_1 l_1
+p_2 l_2 
 ...
+p_a l_a
 ```
 
 
@@ -25,9 +26,10 @@ Ausgeben sollst du nur die Ergebnisse deiner Berechnung.
 Das könnte dann zum Beispiel so aussehen:
 #### Input
 ```
+3
 3 4
-114 138
 6 12
+114 138
 ```
 
 #### Output

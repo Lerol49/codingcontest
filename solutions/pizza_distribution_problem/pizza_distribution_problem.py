@@ -1,10 +1,9 @@
 from math import gcd
 from random import randint
 
-def create_cf():
+def solve():
     def solve_one_line(n, m):
         return str(int(m / gcd(n, m)))
-
 
     output = ""
 
@@ -17,7 +16,7 @@ def create_cf():
         out.write(output)
 
 
-def create_inp():
+def create_input_file():
     output = ""
 
     for i in range(1000):
@@ -28,7 +27,6 @@ def create_inp():
     with open("input.txt", "w") as inp:
         inp.write(output)
 
-create_cf()
 
 
 

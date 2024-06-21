@@ -133,12 +133,28 @@ class Contest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     contest_id = db.Column(db.String())
     stats = db.Column(db.JSON, default={})
+    running = db.Column(db.Boolean, default=False)
+    end_time = db.Integer(db.Integer, default=0)
 
 
     def update_stats(self, stats_dict):
         self.stats = stats_dict
         attributes.flag_modified(self, "stats")
         db.session.commit()
+
+    def set_end_time(self, new_time):
+        self.end_time = new_time
+        db.commit()
+
+    def set_running(self, value):
+        self.running = value
+        db.commit()
+
+    def get_running(self):
+        return self.running
+
+    def get_end_time(self):
+        return self.end_time
 
 
 

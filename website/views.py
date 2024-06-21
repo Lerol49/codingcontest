@@ -28,7 +28,7 @@ def admin_required(func):
             return current_app.ensure_sync(func)(*args, **kwargs)
         except AttributeError:  # pragma: no cover
             return func(*args, **kwargs)
-    return wrapper 
+    return wrapper
 
 
 @views.route("/")
@@ -93,6 +93,10 @@ def profile():
 @views.route("contest/<contest_id>/<problem_id>", methods=["POST", "GET"])
 @login_required
 def load_contest_problem(contest_id, problem_id):
+    if not Contest.query.filter_by(contest_id=contest_id).first().get_running() and current_user.rights != "admin":
+        flash("Contest not running")
+        return redirect("/contest/" + contest_id)
+
     if contest_data["contests"].get(contest_id) is None:
         return "no"
 

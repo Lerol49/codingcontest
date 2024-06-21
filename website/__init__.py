@@ -26,8 +26,10 @@ def create_app():
     # Import and register blueprints
     from .views import views
     from .auth import auth
+    from .other_requests import other_requests
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(other_requests, url_prefix='/')
 
     Misaka(app, math_explicit=True, math=True)
 

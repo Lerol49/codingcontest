@@ -134,7 +134,7 @@ class Contest(db.Model):
     contest_id = db.Column(db.String())
     stats = db.Column(db.JSON, default={})
     running = db.Column(db.Boolean, default=False)
-    end_time = db.Integer(db.Integer, default=0)
+    end_time = db.Column(db.Integer, default=0)
 
 
     def update_stats(self, stats_dict):

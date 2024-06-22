@@ -4,9 +4,9 @@ einer Straße. Jetzt soll es aber tief ins Unterholz gehen. Dafür möchten wir 
 kürzesten Weg von der Straße zu unserem Zielpunkt, einem geheimen Tempel, nehmen.
 Von wo müssen wir von der Straße abweichen?
 
-Wir können unsere Straße mit der Funktion $s(x)=2/7x$ modellieren. Der Tempel ist
-bei T=(2, 1). Gesucht ist die x-Koordinate, von der der Weg von der Straße zum 
-Tempel am kürzesten ist. Gib das Ergebnis mit mindestens 6 korrekten Nachkommastellen an.
+Wir können unsere Straße mit der Funktion s(x)=2/7x modellieren. Der Tempel ist
+bei T=(4, 3). Gesucht ist die x-Koordinate, von der der Weg von der Straße zum 
+Tempel am kürzesten ist. Gib das Ergebnis mit mindestens 5 korrekten Nachkommastellen an.
 
 
 ### Beispiel

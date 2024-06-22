@@ -1,7 +1,7 @@
 ### Höchste Gipfel Differenz
 
 
-Wir betrachten eine Bergkette mit n Bergen. Ein Berg hat die Höhe b_i mit 1 <= i <= n.
+Wir betrachten eine Bergkette mit $n$ Bergen. Ein Berg hat die Höhe $b_i$ mit $1 \le i \le n$.
 Gesucht ist der höchste Höhenunterschied zwischen zwei Bergen in der Bergkette.
 
 Es wird zuerst eine Zahl a übergeben, die die Anzahl der kommenden Zeilen steht. 

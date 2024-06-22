@@ -27,5 +27,5 @@ def compare_output_number(submission, control_filename):
     expected = float(control_file[0])
     margin_of_error = float(control_file[1])
 
-    return abs(submission - expected) < margin_of_error
+    return abs(submission - expected) <= margin_of_error
 

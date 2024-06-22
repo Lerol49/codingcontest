@@ -25,6 +25,11 @@
               "name": "Höchste Gipfel Differenz",
               "points": 300,
               "submission_type": "file"
+          },
+          "cool_number_contest": {
+              "name": "Cool Number Contest",
+              "points": 400,
+              "submission_type": "number"
           }
 
       }

@@ -62,3 +62,14 @@ code {
 
 }
 
+
+
+ol,
+ul,
+menu {
+  list-style: circle !important;
+  margin-top: 0.5vh !important;
+  margin-left: 2.5vw !important;
+  margin-bottom: 0.5vh !important;
+}
+

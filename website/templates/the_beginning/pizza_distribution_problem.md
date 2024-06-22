@@ -1,6 +1,6 @@
-## Pizza Distribution Problem
+### Pizza Distribution Problem
 
-Angenommen wir haben *p* Pizzen und *l* Leute mit *p* &leq; *l*.
+Angenommen wir haben $p$ Pizzen und $l$ Leute mit $p \le l$.
 
 Wir möchten jetzt die Pizzen auf uns aufteilen. Dabei gelten folgende Regeln:
 
@@ -9,8 +9,8 @@ Wir möchten jetzt die Pizzen auf uns aufteilen. Dabei gelten folgende Regeln:
 
 In wie viele Stücke müssen wir die Pizzen jeweils schneiden?
 
-Übergeben wird dir eine erste Zahl *a* für die Anzahl an Zeilen danach und danach genau
-so viele Kombinationen von p_i und l_i:
+Übergeben wird dir eine erste Zahl $a$ für die Anzahl an Zeilen danach und danach genau
+so viele Kombinationen von $p_i$ und $l_i$.
 
 ```
 a

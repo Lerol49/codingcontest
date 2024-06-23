@@ -22,11 +22,12 @@ n
 s_1
 s_2
 ...
-s_(n)
+s_n
 ```
 
 Frage dich so lange durch, bis du in dem Stockwerk angekommen
-bist, in dem der Verweis die Zahl $0$ ist, da ist die Personalausweisbehörde. <br>
+bist, in dem der Verweis die Zahl $0$ ist, da ist die Personalausweisbehörde. 
+<br>
 Gib alle Stockwerke, die du besucht hast in der richtigen Reihenfolge aus.
 
 

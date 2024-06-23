@@ -13,12 +13,12 @@
           },
           "behoerdenrennen": {
             "name": "Behördenrennen",
-            "points": 420,
+            "points": 300,
             "submission_type": "file"
           },
           "expedition_im_dschungel": {
               "name": "Expedition im Dschungel",
-              "points": 300,
+              "points": 400,
               "submission_type": "number"
           },
           "hoechste_gipfel_differenz": {
@@ -30,6 +30,11 @@
               "name": "Cool Number Contest",
               "points": 400,
               "submission_type": "number"
+          },
+          "the_maze": {
+              "name": "The Maze",
+              "points": 800,
+              "submission_type": "file"
           }
 
       }

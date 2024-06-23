@@ -16,7 +16,7 @@ window.addEventListener("load", (event) => {
 
 
 
-    if (stored) {
+    if (stored && stored != 0) {
         end_time = stored;
         till_time = end_time - cur_time;
 

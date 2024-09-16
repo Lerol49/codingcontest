@@ -2,3 +2,4 @@ __pycache__/
 uploads/*
 *.db
 latex_build/
+.idea/

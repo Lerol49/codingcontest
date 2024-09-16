@@ -51,8 +51,7 @@ def signup():
 
 def create_team(contest_id):
     if current_user.get_team(contest_id) is not None:
-        flash("DU HURENSOHN")
-        return
+        return redirect("https://www.youtube.com/watch?v=HIcSWuKMwOw")
     form = CreateTeam()
     if form.is_submitted():
         if not form.validate():

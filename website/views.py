@@ -1,14 +1,17 @@
 from functools import wraps
-from flask import render_template, redirect, Blueprint, request, send_from_directory, current_app, flash
-from flask_login import login_required
-from flask_login import current_user
+from flask import render_template, redirect, Blueprint, request, url_for, current_app, flash
+from sqlalchemy.sql.functions import current_user
+from flask_login import login_required, current_user
 from . import auth
 from .models import get_teams, get_contest
 from .leaderboard import sort_teams_score
 from . import form
 from . import contest_data
-from .models import Contest, init_Contests
+from .models import Contest, init_Contests, User
 from .other_requests import set_end_time
+from werkzeug.security import check_password_hash, generate_password_hash
+from .form import ChangeUsernameForm, ChangePasswordForm
+from . import db
 
 from .contest.contest_handling import handle_task_submission
 
@@ -80,13 +83,34 @@ def contest_index(contest_id):
                            join_form=form.JoinTeam())
 
 
-
-
-
-@views.route("/profile")
+@views.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
-    return render_template("/profile.html", user=current_user, contests=contest_data["contests"])
+    change_username_form = ChangeUsernameForm()
+    change_password_form = ChangePasswordForm()
+
+    if change_username_form.validate_on_submit():
+        new_username = change_username_form.new_username.data
+        if User.query.filter_by(username=new_username).first():
+            flash("Username already exists.", "error")
+        else:
+            current_user.username = new_username
+            db.session.commit()
+            flash("Username changed successfully!", "success")
+            return redirect(url_for("views.profile"))
+
+    if change_password_form.validate_on_submit():
+        if not check_password_hash(current_user.password, change_password_form.current_password.data):
+            flash("Current password is incorrect.", "error")
+        else:
+            new_password = generate_password_hash(change_password_form.new_password.data)
+            current_user.password = new_password
+            db.session.commit()
+            flash("Password changed successfully!", "success")
+            return redirect(url_for("views.profile"))
+
+    return render_template("profile.html", user=current_user, contests=contest_data["contests"],
+                           change_username_form=change_username_form, change_password_form=change_password_form)
 
 
 

@@ -1,4 +1,5 @@
-{% extends "./base_menu.html" %}
+{% extends "bootstrap/base.html" %}
+{% include "./base_menu.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
@@ -10,7 +11,7 @@
     </div>
 
     <!-- Contest Buttons -->
-    <div class="container mx-auto mb-5 text-center">
+    <div class="container mx-auto mb-5 text-center mt-10">
         <div class="mb-8">
             {% for contest in contests %}
                 <button class="btn btn-lg btn-primary mx-2 my-2">{{ contest }}</button>
@@ -24,29 +25,30 @@
     </div>
 
     <!-- Change Username Form -->
-    <div class="container mx-auto mb-5">
-        <h3 class="text-white font-bold text-2xl mb-3 text-center">Change Username</h3>
+    <div class="container mx-auto mb-5 text-white mt-16">
         <form method="POST" action="{{ url_for('views.profile') }}" class="mx-auto" style="max-width: 400px;">
+            <p class="text-white font-bold text-2xl mb-3 text-center">Change Username</p>
             {{ change_username_form.hidden_tag() }}
             <div class="mb-4">
-                {{ wtf.form_field(change_username_form.new_username, class="form-input rounded-full py-2 px-4 w-full") }}
+                {{ wtf.form_field(change_username_form.new_username) }}
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary w-full">Change Username</button>
             </div>
         </form>
     </div>
+    <br>
+    <br>
 
     <!-- Change Password Form -->
-    <!-- Change Password Form -->
-    <div class="container mx-auto mb-5">
-        <h3 class="text-white font-bold text-2xl mb-3 text-center">Change Password</h3>
+    <div class="container mx-auto mb-5 mt-16">
         <form method="POST" action="{{ url_for('views.profile') }}" class="mx-auto" style="max-width: 400px;">
+            <p class="text-white font-bold text-2xl mb-3 text-center">Change Password</p>
             {{ change_password_form.hidden_tag() }}
-            <div class="mb-4">
-                {{ wtf.form_field(change_password_form.current_password, class="form-input rounded-full py-2 px-4 w-full mb-2") }}
-                {{ wtf.form_field(change_password_form.new_password, class="form-input rounded-full py-2 px-4 w-full mb-2") }}
-                {{ wtf.form_field(change_password_form.confirm_password, class="form-input rounded-full py-2 px-4 w-full") }}
+            <div class="mb-4 text-white">
+                {{ wtf.form_field(change_password_form.current_password) }}
+                {{ wtf.form_field(change_password_form.new_password) }}
+                {{ wtf.form_field(change_password_form.confirm_password) }}
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-lg btn-primary btn-block">Change Password</button>

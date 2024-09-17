@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields.simple import StringField, BooleanField, PasswordField
-from wtforms.validators import InputRequired, Length, DataRequired, EqualTo
+from wtforms.validators import InputRequired, Length, EqualTo
 
 
 class LoginForm(FlaskForm):
@@ -31,9 +31,9 @@ class SetEndTime(FlaskForm):
     end_time = StringField("Neue Zeit", validators=[InputRequired()])
 
 class ChangeUsernameForm(FlaskForm):
-    new_username = StringField('New Username', validators=[DataRequired(), Length(min=3, max=30)])
+    new_username = StringField("New Username", validators=[InputRequired(), Length(min=3, max=30)])
 
 class ChangePasswordForm(FlaskForm):
-    current_password = PasswordField('Current Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=3, max=30)])
-    confirm_password = PasswordField('Confirm New Password', validators=[DataRequired(), EqualTo('new_password')])
+    current_password = PasswordField("Current Password", validators=[InputRequired()])
+    new_password = PasswordField("New Password", validators=[InputRequired(), Length(min=3, max=30)])
+    confirm_password = PasswordField("Confirm New Password", validators=[InputRequired(), EqualTo('new_password')])

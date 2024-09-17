@@ -25,7 +25,7 @@ def admin_required(func):
             return redirect("/login")
 
         if not current_user.rights == "admin":
-            return "NICHT ADMIN"
+            return redirect("https://www.youtube.com/watch?v=HIcSWuKMwOw")
 
         try:
             # current_app.ensure_sync available in Flask >= 2.0

@@ -89,6 +89,17 @@ def profile():
     change_username_form = ChangeUsernameForm()
     change_password_form = ChangePasswordForm()
 
+    # Fun with statistics
+    stats = {
+        "total_contests": len(contest_data["contests"]),
+        "completed_problems": sum(
+            1 for contest in contest_data["contests"].values()
+            for problem in contest["problems"]
+            if current_user.get_problem_status(problem)
+        ),
+        "total_problems": sum(len(contest["problems"]) for contest in contest_data["contests"].values())
+    }
+
     if change_username_form.validate_on_submit():
         new_username = change_username_form.new_username.data
         if User.query.filter_by(username=new_username).first():
@@ -110,7 +121,9 @@ def profile():
             return redirect(url_for("views.profile"))
 
     return render_template("profile.html", user=current_user, contests=contest_data["contests"],
-                           change_username_form=change_username_form, change_password_form=change_password_form)
+                           change_username_form=change_username_form, change_password_form=change_password_form,
+                           stats=stats)
+
 
 
 

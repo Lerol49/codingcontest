@@ -8,7 +8,7 @@ from website.form import NumberSubmission
 
 
 def handle_task_submission(contest_name, problem_name, control_filename):
-    user = User.query.filter_by(username=current_user.username).first()
+    user = User.query.filter_by(id=current_user.id).first()
     team = user.get_team(contest_name)
 
 

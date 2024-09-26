@@ -1,5 +1,4 @@
-{% extends "bootstrap/base.html" %}
-{% include "./base_menu.html" %}
+{% extends "./base_menu.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
@@ -13,16 +12,17 @@
     <!-- Statistics Overview -->
     <div class="container mx-auto mb-5 text-center mt-10">
         <div class="text-white font-bold text-2xl mb-4">
-            <p>Statistics Overview</p>
+            <p>Statistiken</p>
         </div>
         <div class="mb-8 text-white">
-            <p>Total Contests: {{ stats.total_contests }}</p>
-            <p>Completed Problems: {{ stats.completed_problems }}</p>
-            <p>Total Problems: {{ stats.total_problems }}</p>
+            <p>Teilgenommene Contests: {{ stats.total_contests }}</p>
+            <p>Gelöste Probleme: {{ stats.completed_problems }}</p>
+            <p>Gesamte Problemanzahl: {{ stats.total_problems }}</p>
         </div>
     </div>
 
     <!-- Contest Buttons -->
+    <!--
     <div class="container mx-auto mb-5 text-center mt-10">
         <div class="mb-8">
             {% for contest in contests %}
@@ -30,6 +30,7 @@
             {% endfor %}
         </div>
     </div>
+    -->
 
     <!-- Divider -->
     <div class="container mx-auto mb-10">
@@ -37,34 +38,23 @@
     </div>
 
     <!-- Change Username Form -->
-    <div class="container mx-auto mb-5 text-white mt-16">
-        <form method="POST" action="{{ url_for('views.profile') }}" class="mx-auto" style="max-width: 400px;">
-            <p class="text-white font-bold text-2xl mb-3 text-center">Change Username</p>
-            {{ change_username_form.hidden_tag() }}
-            <div class="mb-4">
-                {{ wtf.form_field(change_username_form.new_username) }}
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary w-full">Change Username</button>
-            </div>
-        </form>
-    </div>
-    <br>
-    <br>
-
+    <p class="text-center font-bold text-2xl text-white">Benutzernamen ändern</p>
+    <form action="" method="post" class="flex flex-col items-center">
+        {{ change_username_form.hidden_tag() }}
+        <input type="text" name="new_username" placeholder="Benutzername" class="w-100 mt-4 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
+        <div class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
+            <button type="submit" class="">Submit</button>
+        </div>
+    </form>
     <!-- Change Password Form -->
-    <div class="container mx-auto mb-5 mt-16">
-        <form method="POST" action="{{ url_for('views.profile') }}" class="mx-auto" style="max-width: 400px;">
-            <p class="text-white font-bold text-2xl mb-3 text-center">Change Password</p>
-            {{ change_password_form.hidden_tag() }}
-            <div class="mb-4 text-white">
-                {{ wtf.form_field(change_password_form.current_password) }}
-                {{ wtf.form_field(change_password_form.new_password) }}
-                {{ wtf.form_field(change_password_form.confirm_password) }}
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Change Password</button>
-            </div>
-        </form>
-    </div>
+    <p class="text-center font-bold text-2xl text-white">Passwort ändern</p>
+    <form action="" method="post" class="flex flex-col items-center">
+        {{ change_password_form.hidden_tag() }}
+        <input type="text" name="current_password" placeholder="altes Passwort" class="w-100 mt-4 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
+        <input type="text" name="new_password" placeholder="neues Passwort" class="w-100 mt-4 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
+        <input type="text" name="confirm_password" placeholder="neues Passwort wiederholen" class="w-100 mt-4 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
+        <div class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
+            <button type="submit" class="">Submit</button>
+        </div>
+    </form>
 {% endblock %}

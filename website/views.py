@@ -100,25 +100,34 @@ def profile():
         "total_problems": sum(len(contest["problems"]) for contest in contest_data["contests"].values())
     }
 
-    if change_username_form.validate_on_submit():
-        new_username = change_username_form.new_username.data
-        if User.query.filter_by(username=new_username).first():
-            flash("Username already exists.", "error")
+    if change_password_form.is_submitted() and "new_username" in request.form:
+        if not change_username_form.validate():
+            flash("the username has to have at least 3 characters", "error")
         else:
-            current_user.username = new_username
-            db.session.commit()
-            flash("Username changed successfully!", "success")
-            return redirect(url_for("views.profile"))
+            new_username = change_username_form.new_username.data
 
-    if change_password_form.validate_on_submit():
-        if not check_password_hash(current_user.password, change_password_form.current_password.data):
-            flash("Current password is incorrect.", "error")
+            change_successful = current_user.change_username(new_username)
+
+            if change_successful:
+                flash("Benutzername wurde geändert", "success")
+            else:
+                flash("Username already exists.", "error")
+
+        return redirect(url_for("views.profile"))
+
+    if change_password_form.is_submitted() and "new_password" in request.form:
+        if not change_password_form.validate():
+            flash("The passwords do not match or it is too short", "error")
         else:
-            new_password = generate_password_hash(change_password_form.new_password.data)
-            current_user.password = new_password
-            db.session.commit()
-            flash("Password changed successfully!", "success")
-            return redirect(url_for("views.profile"))
+            new_password = change_password_form.new_password.data
+            alleged_current_password = change_password_form.current_password.data
+
+            password_change_successful = current_user.change_password(new_password, alleged_current_password)
+            if password_change_successful:
+                flash("Password changed successfully!", "success")
+            else:
+                flash("Current password is incorrect.", "error")
+        return redirect(url_for("views.profile"))
 
     return render_template("profile.html", user=current_user, contests=contest_data["contests"],
                            change_username_form=change_username_form, change_password_form=change_password_form,

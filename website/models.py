@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.orm import attributes
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(UserMixin, db.Model):
@@ -75,13 +76,31 @@ class User(UserMixin, db.Model):
                 count += 1
         return count
 
+    def change_username(self, new_username):
+        if User.query.filter_by(username=new_username).first() is None:
+            self.username = new_username
+            db.session.commit()
+            return True
+        else:
+            return False
+
+    def change_password(self, new_password, alleged_current_password):
+        if check_password_hash(self.password, alleged_current_password):
+            new_password = generate_password_hash(new_password)
+            self.password = new_password
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
 
 
 class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     contest_id = db.Column(db.String())
-    members = db.Column(db.JSON, default={"names": []})
+    members = db.Column(db.JSON, default={"member_id": []})
     password = db.Column(db.String())
     stats = db.Column(db.JSON, default={})
 
@@ -93,14 +112,14 @@ class Team(db.Model):
     def get_members(self):
         """returns List of all User Objects associated with the team"""
         members_objects = []
-        for member in self.members["names"]:
-            members_objects.append(User.query.filter_by(username=member).first())
+        for member_id in self.members["member_id"]:
+            members_objects.append(User.query.filter_by(id=member_id).first())
         return members_objects
 
 
     def add_member(self, user):
         if user.get_team(self.contest_id) is None:
-            self.members["names"].append(user.username)
+            self.members["member_id"].append(user.id)
             self._commit("members")
             user._join_team(self.contest_id, self.name)
 

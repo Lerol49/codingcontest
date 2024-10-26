@@ -9,7 +9,7 @@ woerter = {
 
 
 total = 0
-for problem in woerter.keys():
+for problem in woerter.values():
     for char in problem:
         if char == " ":
             continue

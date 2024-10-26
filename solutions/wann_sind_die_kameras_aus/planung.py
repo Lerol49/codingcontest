@@ -11,7 +11,7 @@ def create_input_file(length):
         f.write(output)
 
 
-create_input_file(4)
+create_input_file(20)
 
 
 def solve():

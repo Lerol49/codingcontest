@@ -70,7 +70,9 @@ class User(UserMixin, db.Model):
         if contest_data["contests"][contest_name]["progression"] is False:
             return
 
-        new_problems = contest_data["contests"][contest_name]["unlock_tree"][solved_problem]
+        new_problems = contest_data["contests"][contest_name]["unlock_tree"].get(solved_problem)
+        if new_problems is None:
+            return
         for problem in new_problems:
             if not self.has_access_to(problem):
                 self.give_access_to_problem(problem)

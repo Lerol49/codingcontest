@@ -52,7 +52,8 @@
         "team_size": 3,
         "progression": true,
         "unlock_tree": {
-            "base": ["wann_ist_niemand_da", "wann_sind_die_kameras_aus"],
+            "base": ["einleitung"],
+            "einleitung": ["wann_ist_niemand_da", "wann_sind_die_kameras_aus"],
             "wann_ist_niemand_da": ["passwort_karte", "passwoerter_aufschreiben_ist_gefaehrlich"],
             "wann_sind_die_kameras_aus": ["passwort_karte", "passwoerter_aufschreiben_ist_gefaehrlich"],
             "passwort_karte": ["flucht", "die_heiligen_worte"],
@@ -62,6 +63,12 @@
         },
 
         "problems": {
+            "einleitung":{
+                "name": "Einleitung",
+                "points": 0,
+                "input_file": null,
+                "submission_type": "string"
+            },
             "wann_ist_niemand_da":{
                 "name": "Wann ist niemand da?",
                 "points": 300,

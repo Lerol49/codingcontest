@@ -2,7 +2,8 @@
 Ihr stürmt in das Büro von Prestin, nur um festzustellen, dass kein Skript auf seinem
 Schreibtisch liegt. Ihr startet schnell seinen PC, er wird bestimmt eine digitale Version
 haben. Ihr werdet von einem Profilbild von einem lächelnden Prestin und einem Passwortfeld
-begrüßt. In einer Schreibtischschublade findet ihr einen verdächtig aussehenden Zettel.
+begrüßt. In einer Schreibtischschublade findet ihr neben seltsam vielen Notizen
+über das römische Reich einen verdächtig aussehenden Zettel.
 
 ```
 wurzel

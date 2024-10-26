@@ -16,5 +16,6 @@ if local:
 else:
     ip = get_ip_address()
 
+
 if __name__ == "__main__":
-    app.run(host=ip, port=8000, debug=True)
+    app.run(host=ip, port=8080, debug=True)

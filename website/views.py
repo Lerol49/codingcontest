@@ -65,6 +65,9 @@ def home():
 @login_required
 def contest_index(contest_id):
 
+    if not current_user.has_access_to(contest_id):
+        current_user.give_access_to_contest(contest_id)
+
     if request.method == "POST":
         if "new_teamname" in request.form:
             auth.create_team(contest_id)
@@ -91,13 +94,14 @@ def profile():
 
     # Fun with statistics
     stats = {
-        "total_contests": len(contest_data["contests"]),
+        # "total_contests": len(contest_data["contests"]),
+        "total_contests": sum(1 for contest in contest_data["contests"].keys()
+                              if current_user.has_access_to(contest)),
         "completed_problems": sum(
             1 for contest in contest_data["contests"].values()
             for problem in contest["problems"]
-            if current_user.get_problem_status(problem)
+            if current_user.has_access_to(problem) and current_user.get_problem_status(problem)
         ),
-        "total_problems": sum(len(contest["problems"]) for contest in contest_data["contests"].values())
     }
 
     if change_password_form.is_submitted() and "new_username" in request.form:
@@ -150,6 +154,9 @@ def load_contest_problem(contest_id, problem_id):
     if contest_data["contests"][contest_id]["problems"].get(problem_id.replace(".md", "")) is None:
         return "nein"
 
+    if not current_user.has_access_to(problem_id):
+        return "du darfst hier noch nicht rein"
+
     handle_task_submission(contest_id, problem_id, "solutions/" + problem_id + "/output.txt")
 
     with open("website/templates/" + contest_id + "/" + problem_id + ".md", "r") as problem_file:
@@ -157,10 +164,13 @@ def load_contest_problem(contest_id, problem_id):
 
 
     submission_type = contest_data["contests"][contest_id]["problems"][problem_id]["submission_type"]
+    input_file_type = contest_data["contests"][contest_id]["problems"][problem_id]["input_file"]
+
 
     return render_template("/base_problem_md.html", problem_id=problem_id, problem_content=markdown_text,
-                           user=current_user, submission_type=submission_type,
+                           user=current_user, submission_type=submission_type, input_file_type=input_file_type,
                            number_submission_form=form.NumberSubmission(),
+                           string_submission_form=form.StringSubmission(),
                            contest_id=contest_id)
 
 

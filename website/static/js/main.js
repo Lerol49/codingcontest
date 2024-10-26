@@ -10,7 +10,7 @@ var cur_time = parseInt(Date.now()/1000);
 
 window.addEventListener("load", (event) => {
     var path = window.location.pathname;
-    var contest_id = "the_beginning"
+    var contest_id = "das_skript"
 
     var stored = localStorage.getItem("end_time");
 
@@ -18,6 +18,11 @@ window.addEventListener("load", (event) => {
 
     if (stored && stored != 0) {
         end_time = stored;
+
+        // this is for refreshing the timer after the contest has ended
+        if (end_time < cur_time) {
+            localStorage['end_time'] = 0;
+        }
         till_time = end_time - cur_time;
 
     } else {
@@ -50,10 +55,6 @@ window.addEventListener("load", (event) => {
     }
 
     document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
-
-
-
-
 
 });
 

@@ -41,8 +41,7 @@ def signup():
             else:
                 hashed_password = generate_password_hash(form.password.data)
 
-                new_user = models.create_new_user(username=form.username.data, password=hashed_password)
-                new_user.give_access_to_contest("the_beginning")
+                models.create_new_user(username=form.username.data, password=hashed_password)
 
                 return redirect("/home")
 

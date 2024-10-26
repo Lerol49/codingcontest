@@ -5,40 +5,106 @@
     "the_beginning": {
       "name": "The Beginning",
       "team_size": 2,
+      "progression": false,
       "problems": {
           "pizza_distribution_problem":{
             "name": "Pizza Distribution Problem",
             "points": 500,
+            "input_file": "txt",
             "submission_type": "file"
           },
           "behoerdenrennen": {
             "name": "Behördenrennen",
             "points": 300,
+            "input_file": "txt",
             "submission_type": "file"
           },
           "expedition_im_dschungel": {
               "name": "Expedition im Dschungel",
               "points": 400,
+              "input_file": null,
               "submission_type": "number"
           },
           "hoechste_gipfel_differenz": {
               "name": "Höchste Gipfel Differenz",
               "points": 300,
+              "input_file": "txt",
               "submission_type": "file"
           },
           "cool_number_contest": {
               "name": "Cool Number Contest",
               "points": 400,
+              "input_file": null,
               "submission_type": "number"
           },
           "the_maze": {
               "name": "The Maze",
               "points": 800,
+              "input_file": "txt",
               "submission_type": "file"
           }
 
       }
 
+    },
+    "das_skript":{
+        "name": "Das Skript",
+        "team_size": 3,
+        "progression": true,
+        "unlock_tree": {
+            "base": ["wann_ist_niemand_da", "wann_sind_die_kameras_aus"],
+            "wann_ist_niemand_da": ["passwort_karte", "passwoerter_aufschreiben_ist_gefaehrlich"],
+            "wann_sind_die_kameras_aus": ["passwort_karte", "passwoerter_aufschreiben_ist_gefaehrlich"],
+            "passwort_karte": ["flucht", "die_heiligen_worte"],
+            "passwoerter_aufschreiben_ist_gefaehrlich": ["flucht", "die_heiligen_worte"],
+            "flucht": ["skript"],
+            "die_heiligen_worte": ["skript"]
+        },
+
+        "problems": {
+            "wann_ist_niemand_da":{
+                "name": "Wann ist niemand da?",
+                "points": 300,
+                "input_file": "txt",
+                "submission_type": "number"
+            },
+            "wann_sind_die_kameras_aus":{
+                "name": "Wann sind die Kameras aus?",
+                "points": 300,
+                "input_file": "txt",
+                "submission_type": "number"
+            },
+            "passwort_karte":{
+                "name": "Passwort Karte",
+                "points": 700,
+                "input_file": "txt",
+                "submission_type": "file"
+            },
+            "passwoerter_aufschreiben_ist_gefaehrlich":{
+                "name": "Passwörter aufschreiben ist gefährlich.",
+                "points": 300,
+                "input_file": null,
+                "submission_type": "string"
+            },
+            "flucht":{
+                "name": "Flucht",
+                "points": 400,
+                "input_file": "txt",
+                "submission_type": "file"
+            },
+            "die_heiligen_worte":{
+                "name": "Die Heiligen Worte",
+                "points": 400,
+                "input_file": "pdf",
+                "submission_type": "string"
+            },
+            "skript":{
+                "name": "Das Skript",
+                "points": 500,
+                "input_file": null,
+                "submission_type": "number"
+            }
+        }
     }
 
   }

@@ -41,6 +41,9 @@ class User(UserMixin, db.Model):
     def give_access_to_problem(self, problem_name):
         self.stats[problem_name] = [False, 0]
 
+    def has_access_to(self, problem_or_contest_id):
+        return problem_or_contest_id in self.stats.keys() or problem_or_contest_id in self.contest_data.keys()
+
 
     def give_access_to_contest(self, contest_name):
         from . import contest_data
@@ -52,10 +55,29 @@ class User(UserMixin, db.Model):
         self.contest_data[contest_name] = None
         attributes.flag_modified(self, "contest_data")
 
-        for problem_name in contest_data["contests"][contest_name]["problems"]:
-            self.give_access_to_problem(problem_name)
+        if contest_data["contests"][contest_name]["progression"] is False:
+            for problem_name in contest_data["contests"][contest_name]["problems"]:
+                self.give_access_to_problem(problem_name)
+        else:
+            for problem_name in contest_data["contests"][contest_name]["unlock_tree"]["base"]:
+                self.give_access_to_problem(problem_name)
 
         self._commit_stats()
+
+    def give_access_to_next_problems(self, contest_name, solved_problem):
+        from . import contest_data
+
+        if contest_data["contests"][contest_name]["progression"] is False:
+            return
+
+        new_problems = contest_data["contests"][contest_name]["unlock_tree"][solved_problem]
+        for problem in new_problems:
+            if not self.has_access_to(problem):
+                self.give_access_to_problem(problem)
+                self._commit_stats()
+
+
+
 
 
     def _join_team(self, contest_name, team_name):
@@ -72,7 +94,7 @@ class User(UserMixin, db.Model):
         from . import contest_data
         count = 0
         for problem_name in contest_data["contests"][contest_id]["problems"]:
-            if self.get_problem_status(problem_name):
+            if self.has_access_to(problem_name) and self.get_problem_status(problem_name):
                 count += 1
         return count
 
@@ -147,6 +169,13 @@ class Team(db.Model):
         self.stats["_score"] += additional_score
         self._commit("stats")
 
+    def give_others_access_to_next_problems(self, user, contest_name, solved_problem):
+        members = self.get_members()
+        for member in members:
+            if member == user:
+                continue
+            member.give_access_to_next_problems(contest_name, solved_problem)
+
 
 class Contest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -202,7 +231,7 @@ def update_stats_on_new_problem():
             # users_in_need = User.query.filter(User.stats[problem_id] is None).all()
             # teams_in_need = Team.query.filter(Team.stats[problem_id] is None).all()
             for user in User.query.all():
-                if user.stats.get(problem_id) is None:
+                if user.stats.get(problem_id) is None and user.has_access_to(contest):
                     user.give_access_to_problem(problem_id)
                     user._commit_stats()
             for team in Team.query.all():

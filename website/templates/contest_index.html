@@ -24,6 +24,7 @@
             </thead>
             <tbody>
                 {% for problem in problems.keys() %}
+                    {% if user.has_access_to(problem) %}
                     <tr class="odd:bg-contestLeftTableOdd even:bg-contestLeftTableEven text-gray-100 text-lg">
                         <td class="text-left pl-4">
                             <a href="{{contest_id}}/{{ problem }}">{{ problems[problem]["name"] }}</a>
@@ -40,6 +41,7 @@
                             {% endif %}
                         </td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>

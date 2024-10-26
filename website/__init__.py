@@ -31,7 +31,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(other_requests, url_prefix='/')
 
-    Misaka(app, math_explicit=True, math=True)
+    Misaka(app, math_explicit=True, math=True, fenced_code=True)
 
     from .models import User
 
@@ -46,7 +46,7 @@ def create_app():
     with app.app_context():
         db.create_all()
         from .models import init_Contests, update_stats_on_new_problem
-        update_stats_on_new_problem()
+        # update_stats_on_new_problem()
         init_Contests()
 
 

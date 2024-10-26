@@ -29,3 +29,19 @@ def compare_output_number(submission, control_filename):
 
     return abs(submission - expected) <= margin_of_error
 
+
+def compare_output_string(submission, control_filename):
+    submission = str(submission).strip()
+
+    with open(control_filename, "r") as f:
+        control_file = f.readlines()
+
+    expected = str(control_file[0]).strip()
+
+    return submission == expected
+
+
+
+
+
+

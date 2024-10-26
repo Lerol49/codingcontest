@@ -26,6 +26,9 @@ class JoinTeam(FlaskForm):
 class NumberSubmission(FlaskForm):
     submission_number = StringField("Submission", validators=[InputRequired()])
 
+class StringSubmission(FlaskForm):
+    submission_string = StringField("Sumbission", validators=[InputRequired()])
+
 
 class SetEndTime(FlaskForm):
     end_time = StringField("Neue Zeit", validators=[InputRequired()])

@@ -1,19 +1,16 @@
 {% extends "base_menu.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
 {% block body%}
 <p class="text-center font-bold text-4xl text-white">Login</p>
-
 
 <form action="" method="post" class="flex flex-col items-center">
     {{ form.hidden_tag() }}
     <input type="text" name="username" placeholder="Benutzername" class="w-100 mt-4 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
     <input type="password" name="password" autocomplete="off" placeholder="Passwort" class="w-100 mt-4 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
-    <div class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
-        <button type="submit" class="">Login</button>
-    </div>
+    <button type="submit" class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
+        Login
+    </button>
 </form>
-
 
 {% endblock %}

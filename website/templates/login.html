@@ -1,7 +1,7 @@
 {% extends "base_menu.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block body%}
+{% block body %}
 <p class="text-center font-bold text-4xl text-white">Login</p>
 
 <form action="" method="post" class="flex flex-col items-center">
@@ -13,4 +13,7 @@
     </button>
 </form>
 
+<p class="text-center text-white mt-4">
+    Don’t have an account? <a href="/signup" class="text-adminColor font-semibold hover:underline">Sign Up</a>
+</p>
 {% endblock %}

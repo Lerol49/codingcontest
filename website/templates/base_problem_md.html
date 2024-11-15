@@ -24,9 +24,11 @@
     <br>
     {% if input_file_type is not none%}
     <div class="flex flex-col items-center">
-        <div class="mt-5 bg-adminColor hover:bg-adminColorHover text-center rounded-2xl shadow-2xl font-semibold py-3 px-2">
-            <a href="/contest/input_files/{{problem_id}}/{{input_file_type}}" download>Download input file</a>
-        </div>
+        <form action="/contest/input_files/{{problem_id}}/{{input_file_type}}" >
+        <button class="mt-5 bg-adminColor hover:bg-adminColorHover text-center rounded-2xl shadow-2xl font-semibold py-3 px-2">
+            Download input file
+        </button>
+        </form>
     </div>
     {% endif %}
     {% if submission_type == "file" %}
@@ -36,7 +38,9 @@
         <div id="submit" class="">
             <form method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                 <input type="file" name="file" class="bg-adminTeamTableColor text-center rounded py-1 border-2 border-gray-500 shadow-2xl mt-5 px-2"/>
-                <input type="submit" value="Submit" class="mt-5 bg-adminColor hover:bg-adminColorHover w-[50%] text-center rounded-2xl shadow-2xl font-semibold py-3"/>
+                <button type="submit"  class="mt-5 bg-adminColor hover:bg-adminColorHover w-[50%] text-center rounded-2xl shadow-2xl font-semibold py-3"/>
+                    Submiit
+                </button>
             </form>
         </div>
     </div>
@@ -46,9 +50,9 @@
         <form action="" method="post" class="flex flex-col items-center">
             {{ number_submission_form.hidden_tag() }}
             <input type="text" name="submission_number" placeholder="Deine Antwort" class="w-40 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
-            <div class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
-                <input type="submit" class="" value="Submit">
-            </div>
+            <button type="submit" class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
+                Submit
+            </button>
         </form>
 
     {% elif submission_type == "string" %}
@@ -56,9 +60,9 @@
         <form action="" method="post" class="flex flex-col items-center">
             {{ string_submission_form.hidden_tag() }}
             <input type="text" name="submission_string" placeholder="Deine Antwort" class="w-40 text-center rounded py-1 border-2 border-gray-500 shadow-2xl">
-            <div class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
-                <input type="submit" class="" value="Submit">
-            </div>
+            <button type="submit" class="mt-5 bg-adminColor hover:bg-adminColorHover w-[9%] text-center rounded-2xl shadow-2xl font-semibold py-3">
+                Submit
+            </button>
         </form>
 
 

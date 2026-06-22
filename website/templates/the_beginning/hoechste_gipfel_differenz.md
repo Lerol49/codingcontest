@@ -2,7 +2,7 @@
 
 
 Wir betrachten eine Bergkette mit $n$ Bergen. Ein Berg hat die Höhe $b_i$ mit $1 \le i \le n$.
-Gesucht ist der höchste Höhenunterschied zwischen zwei Bergen in der Bergkette.
+Gesucht ist der höchste Höhenunterschied zwischen zwei benachbarten Bergen in der Bergkette.
 
 Es wird zuerst eine Zahl a übergeben, die die Anzahl der kommenden Zeilen steht. 
 Die erste Zahl einer Zeile ist die Anzahl an Bergen in der Bergkette, die restlichen Zahlen sind
@@ -22,7 +22,7 @@ n_a b_a_1 b_a_2 b_a_3 ... b_a_n
 ```
 2
 3 3 6 5
-6 1 1 1 5 3 5
+6 1 1 1 5 3 6
 ```
 
 #### Output

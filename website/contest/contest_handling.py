@@ -9,7 +9,7 @@ import time
 from website.models import Contest
 
 
-def submission_before_contest_end(contest_id):
+def is_contest_running(contest_id):
     contest = Contest.query.filter_by(contest_id=contest_id).first()
     if contest.get_end_time() > time.time():
         return True
@@ -26,7 +26,7 @@ def handle_task_submission(contest_name, problem_name, control_filename):
 
     # handles upload try
     if request.method == "POST":
-        if not submission_before_contest_end(contest_name):
+        if not is_contest_running(contest_name):
             flash("Der Contest läuft nicht", "error")
             return
         submission_result = False

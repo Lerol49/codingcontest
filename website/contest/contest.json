@@ -4,7 +4,7 @@
   "contests": {
     "the_beginning": {
       "name": "The Beginning",
-      "team_size": 2,
+      "team_size": 3,
       "progression": false,
       "problems": {
           "pizza_distribution_problem":{

@@ -3,3 +3,4 @@ uploads/*
 *.db
 latex_build/
 .idea/
+admin_password.txt

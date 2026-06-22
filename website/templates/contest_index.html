@@ -94,7 +94,7 @@
                         {{ create_form.hidden_tag() }}
                         <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" type="text" name="new_teamname" placeholder="Teamname", value="{{request.form.new_teamname}}">
                         <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="new_password" placeholder="Passwort", value="">
-                        <input class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">
+                        <button class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">Submit</button>
                     </form>
                 </div>
 
@@ -104,7 +104,7 @@
                         {{ join_form.hidden_tag() }}
                         <input class="border-4 border-adminColorHover rounded text-center shadow-xl ml-2" type="text" name="teamname" placeholder="Teamname" value="{{request.form.teamname}}">
                         <input class="border-4 border-adminColorHover rounded text-center shadow-xl" type="text" name="password" placeholder="Passwort" value="">
-                        <input class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">
+                        <button class="bg-adminTeamTableContentLight hover:bg-adminTeamTableContentDark btn btn-default border-4 border-adminColorHover rounded text-center shadow-xl mr-2" type="submit">Submit</button>
                     </form>
                 </div>
             {% endif %}

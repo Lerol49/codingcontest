@@ -10,12 +10,12 @@ var cur_time = parseInt(Date.now()/1000);
 
 window.addEventListener("load", (event) => {
     var path = window.location.pathname;
-    var contest_id = "das_skript"
+    var contest_id = "the_beginning"
 
     var stored = localStorage.getItem("end_time");
 
 
-
+    /*
     if (stored && stored != 0) {
         end_time = stored;
 
@@ -26,6 +26,7 @@ window.addEventListener("load", (event) => {
         till_time = end_time - cur_time;
 
     } else {
+    */
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", "/contest/" + contest_id + "/get_end_time", false ); // false for synchronous request
         xmlHttp.send( null );
@@ -35,7 +36,7 @@ window.addEventListener("load", (event) => {
         till_time = end_time - cur_time;
 
         localStorage['end_time'] = end_time;
-    }
+    //}
 
     till_time = Math.max(0, till_time);
 

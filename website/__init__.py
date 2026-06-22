@@ -45,10 +45,13 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-        from .models import init_Contests, update_stats_on_new_problem
-        # update_stats_on_new_problem()
-        init_Contests()
+        # models.update_stats_on_new_problem()
+        models.init_Contests()
 
-
+        if not models.check_user_exists("admin"):
+            with open("./admin_password.txt", "r") as f:
+                pwd = f.read().strip()
+            admin = models.create_new_user("admin", pwd)
+            admin.give_admin_rights()
 
     return app

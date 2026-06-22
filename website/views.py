@@ -14,6 +14,7 @@ from .form import ChangeUsernameForm, ChangePasswordForm
 from . import db
 
 from .contest.contest_handling import handle_task_submission
+from website.contest import contest_handling
 
 views = Blueprint("views", __name__)
 
@@ -144,6 +145,11 @@ def profile():
 @views.route("contest/<contest_id>/<problem_id>", methods=["POST", "GET"])
 @login_required
 def load_contest_problem(contest_id, problem_id):
+
+    if not contest_handling.is_contest_running(contest_id):
+        flash("Contest not running")
+        return redirect("/contest/" + contest_id)
+
     if not Contest.query.filter_by(contest_id=contest_id).first().get_running() and current_user.rights != "admin":
         flash("Contest not running")
         return redirect("/contest/" + contest_id)

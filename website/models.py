@@ -15,13 +15,15 @@ class User(UserMixin, db.Model):
     # "group" is set to None per default
     contest_data = db.Column(db.JSON, default={})
 
-
     # {"<problem_name>": [<bool: solved>, <int: count>], "probl..."}
     stats = db.Column(db.JSON, default={})
 
-
     def _commit_stats(self):
         attributes.flag_modified(self, "stats")
+        db.session.commit()
+
+    def give_admin_rights(self):
+        self.rights = "admin"
         db.session.commit()
 
     def increment_tries_counter(self, problem_name):
@@ -44,12 +46,12 @@ class User(UserMixin, db.Model):
     def has_access_to(self, problem_or_contest_id):
         return problem_or_contest_id in self.stats.keys() or problem_or_contest_id in self.contest_data.keys()
 
-
     def give_access_to_contest(self, contest_name):
         from . import contest_data
 
         if contest_name in self.contest_data:
-            print(f"User {self.username} is already registered in {contest_name}")
+            print(f"User {self.username} is already registered in {
+                  contest_name}")
             return
 
         self.contest_data[contest_name] = None
@@ -70,7 +72,8 @@ class User(UserMixin, db.Model):
         if contest_data["contests"][contest_name]["progression"] is False:
             return
 
-        new_problems = contest_data["contests"][contest_name]["unlock_tree"].get(solved_problem)
+        new_problems = contest_data["contests"][contest_name]["unlock_tree"].get(
+            solved_problem)
         if new_problems is None:
             return
         for problem in new_problems:
@@ -78,18 +81,14 @@ class User(UserMixin, db.Model):
                 self.give_access_to_problem(problem)
                 self._commit_stats()
 
-
-
-
-
     def _join_team(self, contest_name, team_name):
         self.contest_data[contest_name] = team_name
         attributes.flag_modified(self, "contest_data")
         db.session.commit()
 
-
     def get_team(self, contest_id):
-        team = Team.query.filter((Team.name == self.contest_data[contest_id]) & (Team.contest_id == contest_id)).first()
+        team = Team.query.filter((Team.name == self.contest_data[contest_id]) & (
+            Team.contest_id == contest_id)).first()
         return team
 
     def count_solves(self, contest_id):
@@ -118,8 +117,6 @@ class User(UserMixin, db.Model):
             return False
 
 
-
-
 class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
@@ -127,7 +124,6 @@ class Team(db.Model):
     members = db.Column(db.JSON, default={"member_id": []})
     password = db.Column(db.String())
     stats = db.Column(db.JSON, default={})
-
 
     def _commit(self, location):
         attributes.flag_modified(self, location)
@@ -139,7 +135,6 @@ class Team(db.Model):
         for member_id in self.members["member_id"]:
             members_objects.append(User.query.filter_by(id=member_id).first())
         return members_objects
-
 
     def add_member(self, user):
         if user.get_team(self.contest_id) is None:
@@ -186,7 +181,6 @@ class Contest(db.Model):
     running = db.Column(db.Boolean, default=False)
     end_time = db.Column(db.Integer, default=0)
 
-
     def update_stats(self, stats_dict):
         self.stats = stats_dict
         attributes.flag_modified(self, "stats")
@@ -207,18 +201,20 @@ class Contest(db.Model):
         return self.end_time
 
 
-
 def get_contest(contest_id):
     return Contest.query.filter_by(contest_id=contest_id).first()
+
 
 def get_teams(contest_id):
     return Team.query.filter_by(contest_id=contest_id).all()
 
 def init_Contests():
     from . import contest_data
-    Contest.query.delete()
+    #Contest.query.delete()
     contests = contest_data["contests"]
     for contest_name in contests:
+        if get_contest(contest_name) is not None:
+            continue
         contest = Contest(contest_id=contest_name)
         db.session.add(contest)
         db.session.commit()
@@ -242,8 +238,6 @@ def update_stats_on_new_problem():
                     team._commit("stats")
 
 
-
-
 def create_new_team(creator, team_name, contest_id, hashed_password):
     """creates, returnes and saves new Team Object.
     To add a new member call team.add_member(user).
@@ -254,7 +248,8 @@ def create_new_team(creator, team_name, contest_id, hashed_password):
     for problem in contest_data["contests"][contest_id]["problems"]:
         stats[problem] = [False, 0]
 
-    team = Team(name=team_name, contest_id=contest_id, stats=stats, password=hashed_password)
+    team = Team(name=team_name, contest_id=contest_id,
+                stats=stats, password=hashed_password)
     db.session.add(team)
     db.session.commit()
     team.add_member(creator)
@@ -264,13 +259,14 @@ def create_new_team(creator, team_name, contest_id, hashed_password):
 
 def create_new_user(username, password):
     """creates, returnes and saves new User Object"""
-    new_user = User(username=username, password=password)
+    hashed_password = generate_password_hash(password)
+    new_user = User(username=username, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
 
     return new_user
 
 
-
-
+def check_user_exists(username):
+    return User.query.filter_by(username=username).first() is not None
 

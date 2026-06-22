@@ -48,5 +48,4 @@ Gib alle Stockwerke, die du besucht hast in der richtigen Reihenfolge aus.
 5
 3
 2
-0
 ```

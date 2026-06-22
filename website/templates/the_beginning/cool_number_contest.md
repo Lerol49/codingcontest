@@ -3,14 +3,14 @@ Wir möchten zu einem Wettbewerb cooler Zahlen gehen. Da läuft alles nach dem M
 "Wer kennt die coolste Zahl". Der Contest läuft schon ein bisschen, um eine Chance auf
 den Sieg zu haben muss unsere Zahl $z \in \mathbb{N}$ folgende Eigenschaften haben:
 
-- $z$ ist prim
+- $z$ ist eine Primzahl
 - $z$ kommt in den ersten $1000$ Stellen von $\pi$ vor
-- die Quersumme von $z$ ist prim
+- die Quersumme von $z$ ist eine Primzahl
 - $z$ ist größer als $919$
 - $z$ ist ein Palindrom
 
 <br>
-Hier die ersten $1000$ Nachkommastellen von $\pi$ :
+Hier die ersten $1000$ Nachkommastellen von $\pi$ (und noch eine $3.$ zur Vollständigkeit):
 
 <br>
 

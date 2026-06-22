@@ -29,5 +29,5 @@ def solve():
         out.write(output)
 
 
-create_inp()
+# create_inp()
 solve()

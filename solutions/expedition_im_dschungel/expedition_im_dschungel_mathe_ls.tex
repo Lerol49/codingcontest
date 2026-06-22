@@ -1,10 +1,51 @@
 \documentclass{article}
-\usepackage{abgaben}
+\usepackage{my_style}
 \usepackage{amsmath}
+\usepackage{nicematrix}
 
 
 \begin{document}
 \mytitle[Expedition im Dschungel]{Musterlösung}
+
+\section*{1. Möglichkeit: Analysis}
+Effektiv wollen wir die Distanz zwischen dem besten Startpunkt und dem Tempel minimieren.
+
+Sei $T=
+\begin{pNiceMatrix}
+    4\\3
+\end{pNiceMatrix}
+$. 
+Auf der Straße befinden wir uns in Abhängigkeit von $x$ bei 
+$
+\begin{pNiceMatrix}
+    x\\\frac 27x
+\end{pNiceMatrix}
+$
+
+Die Distanz ergibt sich durch die Funktion: $f:\mathbb{R}\to\mathbb{R}$ mit
+\begin{align*}
+    f(x)=&\sqrt{\left(\frac 27x - 3\right)^2+(x-4)^2}\\
+    =&\sqrt{\frac4{49}x^2-\frac{12}7x+9+x^2-8x+16}\\
+    =&\sqrt{\frac{53}{49}x^2-\frac{68}7x+25}\\
+\end{align*}
+Hierdrauf können wir jetzt ganz normal Extremstellen bestimmen:
+
+\begin{align*}
+    &0\stackrel!=f'(x)=\underbrace{\frac{1}{2\sqrt{\frac{53}{49}x^2-\frac{68}7x+25}}}_{\not = 0 \forall x}
+    \cdot \frac{106}{49}x-\frac{68}7\\
+    \Longleftrightarrow &0=\frac{106}{49}x-\frac{68}7\\
+    \Longleftrightarrow &\frac{68}7=\frac{106}{49}x\\
+    \Longleftrightarrow &x=\frac{68}7\cdot\frac{49}{106}=\frac{238}{53}=4.\overline{4905660377358}\\
+\end{align*}
+
+Wir rechnen jetzt nicht mehr die Krümmung aus, wir haben eine nach oben geöffnete Parabel, die hat
+nur eine Extremstelle und das ist ein Minimum. \\cjVd:w
+Genauer wäre es so: $f$ ist eine Normfunktion und daher 
+streng konvex, außerdem ist das Problem unbeschränkt und damit folgt, dass $f$ genau 
+ein Minimum hat und dieses auch sicher angenommen wird.
+
+\newpage
+\section*{2. Möglichkeit: Lineare Algebra}
 Gegeben ist die Funktion \(s(x)=\frac27x\) und der Punkt \(T=(4, 3)\).
 Wir schreiben \(s\) in Vektordarstellung als \[S=t\begin{pmatrix}7\\2\\\end{pmatrix}, t\in \mathbb{R}.\]
 Jetzt betrachten wir alle Vektoren von \(S\) zu \(T\) mit
@@ -21,6 +62,23 @@ Wenn wir jetzt dieses \(t\) in unsere Geradengleichung \(S\) einsetzen erhalten
 \begin{pmatrix}4.\overline{4905660377358}\\1.\overline{2830188679245}\\\end{pmatrix}
 .\]
 Die \(x\)-Koordinate von diesem Vektor ist die Lösung: \(4.\overline{4905660377358}\).\\
+
+
+\newpage
+\section{3. Möglichkeit: Lineare Algebra (aber mit Formel)}
+
+Wir können auch den Ortsvektor vom Tempel auf die Richtung der Straße projezieren:
+
+$T=(4, 3)^T, S=(1, \frac27)^T$
+
+\begin{align*}
+    p &= \frac{\langle T,S \rangle}{\langle S,S \rangle} S
+      = \frac{4+ \frac67}{1+\frac4{49}} \begin{pNiceMatrix}1\\ \frac 27\end{pNiceMatrix}
+      = \frac{238}{53} \begin{pNiceMatrix}1\\ \frac 27\end{pNiceMatrix}
+      =\begin{pNiceMatrix}\frac{238}{53}\\\frac{68}{53}\\\end{pNiceMatrix}
+      =\begin{pNiceMatrix}4.\overline{4905660377358}\\1.\overline{2830188679245}\\\end{pNiceMatrix}
+\end{align*}
+
 
 \end{document}
 

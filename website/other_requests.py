@@ -32,7 +32,9 @@ def set_end_time(contest_id):
         except ValueError:
             flash("invalid input", "error")
         if form.validate_on_submit():
-            contest = Contest.query.filter_by(contest_id=contest_id).first()
+            contest: Contest = Contest.query.filter_by(contest_id=contest_id).first()
+            if contest is None:
+                return
             contest.set_running(True)
             contest.set_end_time(time.time() + submitted_time * 3600)
 
